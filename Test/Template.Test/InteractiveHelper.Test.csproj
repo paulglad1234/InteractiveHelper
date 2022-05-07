@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNet.Testcontainers" Version="1.5.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.8" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="OpenIddict.Abstractions" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\Db.Context\InteractiveHelper.Db.Context.csproj" />
+    <ProjectReference Include="..\..\Data\Db.Entities\InteractiveHelper.Db.Entities.csproj" />
+    <ProjectReference Include="..\..\Services\Settings\InteractiveHelper.Settings.csproj" />
+    <ProjectReference Include="..\..\Shared\Common\InteractiveHelper.Common.csproj" />
+    <ProjectReference Include="..\..\System\Api\InteractiveHelper.Api.csproj" />
+    <ProjectReference Include="..\..\System\Identity\InteractiveHelper.Identity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tests\Component\" />
+    <Folder Include="Tests\Unit\" />
+  </ItemGroup>
+
+</Project>

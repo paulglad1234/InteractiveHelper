@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+
+  sqlserver:
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Pazzw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "21433:1433"
+    networks:
+      - interactivehelper
+    volumes:      
+      - sqlserver-data:/var/opt/mssql
+
+  redis:
+    ports:
+      - "26379:6379"
+    networks:
+      - interactivehelper
+
+  rabbitmq:
+    ports:
+      - "25672:5672"
+      - "25673:5673"
+      - "35672:15672" 
+    networks:
+      - interactivehelper
+    volumes:      
+      - rabbitmq-data:/var/lib/rabbitmq/
+
+  api:
+    ports:
+      - "20000:80"
+    networks:
+      - interactivehelper
+    env_file:
+      - env.api 
+
+  identity:
+    ports:
+      - "20001:80"
+    networks:
+      - interactivehelper
+    env_file:
+      - env.identity
+volumes:
+  sqlserver-data:
+  rabbitmq-data:
+
+networks:
+  interactivehelper:
+    name: InteractiveHelper
+    driver: bridge

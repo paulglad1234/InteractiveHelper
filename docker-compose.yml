@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+
+  redis:
+    image: redis
+
+  rabbitmq:
+    image: rabbitmq:3-management
+
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: System/Api/Dockerfile
+    depends_on:
+      - sqlserver
+      - rabbitmq 
+      - redis
+
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: .
+      dockerfile: System/Identity/Dockerfile
+    depends_on:
+      - sqlserver
+      - rabbitmq 
+      - redis
