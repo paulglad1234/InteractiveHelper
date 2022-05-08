@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3001A978-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveHelper.Test", "Test\Template.Test\InteractiveHelper.Test.csproj", "{8ED48B78-5077-429E-BBD0-413D89E1C20B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveHelper.ItemService", "Services\InteractiveHelper.Catalog\InteractiveHelper.ItemService.csproj", "{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{8ED48B78-5077-429E-BBD0-413D89E1C20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED48B78-5077-429E-BBD0-413D89E1C20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ED48B78-5077-429E-BBD0-413D89E1C20B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{688DACF9-1324-495D-B8F7-3DE3E5040B15} = {60667AFF-DD09-4EDC-8FE5-740267F50541}
 		{B1D2FC07-C962-4900-99AF-CE5317164616} = {4B82EC80-4504-459A-A3E8-AA86CF38C565}
 		{8ED48B78-5077-429E-BBD0-413D89E1C20B} = {3001A978-FD44-4661-AD4C-F21BE7116397}
+		{8A3BBA28-F31C-4326-93B4-D5D49A5A3405} = {211F55F0-B0AA-4468-9290-EF8C16EC545B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F8C24A8-9FF7-41E8-AB56-3A7A21E895E4}

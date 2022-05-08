@@ -17,7 +17,7 @@ public static class ConfigurationFactory
         var variables = new List<KeyValuePair<string, string>>
         {
             Val("CONNECTION_STRING_HOST", "localhost,21433"),
-            Val("CONNECTION_STRING_DATABASE", "TemplateTest"),
+            Val("CONNECTION_STRING_DATABASE", "InteractiveHelperTest"),
             Val("CONNECTION_STRING_USER", "sa"),
             Val("CONNECTION_STRING_PASSWORD", "Pazzw0rd"),
 

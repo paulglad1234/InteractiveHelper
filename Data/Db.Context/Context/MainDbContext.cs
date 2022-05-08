@@ -51,7 +51,20 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<Item>().HasOne(x => x.Category).WithMany(x => x.Items)
             .HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
         builder.Entity<Item>().HasMany(x => x.Characteristics).WithMany(x => x.Items)
-            .UsingEntity<ItemCharacteristic>().ToTable("item_characteristics");
+            .UsingEntity<ItemCharacteristic>(
+                j => j
+                     .HasOne(ic => ic.Characteristic)
+                     .WithMany(characteristic => characteristic.ItemCharacteristics)
+                     .HasForeignKey(ic => ic.CharacteristicId),
+                j => j
+                     .HasOne(ic => ic.Item)
+                     .WithMany(item => item.ItemCharacteristics)
+                     .HasForeignKey(ic => ic.ItemId),
+                j =>
+                {
+                    j.Property(ic => ic.Value).HasDefaultValue("-");
+                    j.HasKey(t => new { t.ItemId, t.CharacteristicId });
+                }).ToTable("item_characteristics");
 
         //builder.Entity<ItemCharacteristic>().Property(x => x.Value).HasMaxLength(20);
     }
