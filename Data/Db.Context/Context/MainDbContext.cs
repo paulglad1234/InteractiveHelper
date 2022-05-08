@@ -11,7 +11,6 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     public DbSet<Category> Categories { get; set; }
     public DbSet<Characteristic> Characteristics { get; set; }
     public DbSet<Item> Items { get; set; }
-    //public DbSet<ItemCharacteristic> ItemCharacteristics { get; set; }
 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
 

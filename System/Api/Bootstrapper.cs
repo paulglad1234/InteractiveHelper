@@ -1,4 +1,6 @@
-﻿using InteractiveHelper.ItemService;
+﻿using InteractiveHelper.BrandService;
+using InteractiveHelper.CategoryService;
+using InteractiveHelper.ItemService;
 using InteractiveHelper.Settings;
 
 namespace InteractiveHelper.Api;
@@ -17,7 +19,9 @@ public static class Bootstrapper
     {
         services
             .AddSettings()
-            .AddItemService();
+            .AddItemService()
+            .AddBrandService()
+            .AddCategoryService();
 
         return services;
     }

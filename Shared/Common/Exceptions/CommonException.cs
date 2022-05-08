@@ -12,11 +12,6 @@ public class CommonException : Exception
     /// </summary>
     public int Code { get; } = -1;
 
-    /// <summary>
-    /// Error name
-    /// </summary>
-    public string Name { get; } = string.Empty;
-
     #region Constructors
 
     public CommonException()

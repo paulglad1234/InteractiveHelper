@@ -19,6 +19,8 @@ var services = builder.Services;
 
 services.AddHttpContextAccessor();
 
+//services.AddRouting();
+
 services.AddAppDbContext(settings);
 
 services.AddAppHealthChecks();

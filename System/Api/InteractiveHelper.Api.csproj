@@ -32,6 +32,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Db.Context\InteractiveHelper.Db.Context.csproj" />
+    <ProjectReference Include="..\..\Services\InteractiveHelper.BrandService\InteractiveHelper.BrandService.csproj" />
+    <ProjectReference Include="..\..\Services\InteractiveHelper.CategoryService\InteractiveHelper.CategoryService.csproj" />
     <ProjectReference Include="..\..\Services\InteractiveHelper.ItemService\InteractiveHelper.ItemService.csproj" />
     <ProjectReference Include="..\..\Services\Settings\InteractiveHelper.Settings.csproj" />
     <ProjectReference Include="..\..\Shared\Common\InteractiveHelper.Common.csproj" />

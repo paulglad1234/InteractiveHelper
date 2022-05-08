@@ -1,6 +1,6 @@
 ﻿namespace InteractiveHelper.Common.Extensions;
 
-using InteractiveHelper.Common.Responses;
+using InteractiveHelper.Common.Responses.Errors;
 using InteractiveHelper.Common.Exceptions;
 using FluentValidation;
 
@@ -11,9 +11,9 @@ public static class ErrorResponseExtensions
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ErrorResponse ToErrorResponse(this ValidationException data)
+    public static ValidationErrorResponse ToErrorResponse(this ValidationException data)
     {
-        var res = new ErrorResponse()
+        var res = new ValidationErrorResponse()
         {
             Message = "",
             FieldErrors = data.Errors.Select(x =>
@@ -21,7 +21,7 @@ public static class ErrorResponseExtensions
                 var elems = x.ErrorMessage.Split('&');
                 var errorName = elems[0];
                 var errorMessage = elems.Length > 0 ? elems[1] : errorName;
-                return new ErrorResponseFieldInfo()
+                return new ValidationErrorResponseFieldInfo()
                 {
                     FieldName = x.PropertyName,
                     Message = errorMessage,
@@ -53,11 +53,12 @@ public static class ErrorResponseExtensions
     /// </summary>
     /// <param name="exception">Exception</param>
     /// <returns></returns>
-    public static ErrorResponse ToErrorResponse(this Exception exception)
+    public static UnknownErrorResponse ToErrorResponse(this Exception exception)
     {
-        var res = new ErrorResponse()
+        var res = new UnknownErrorResponse()
         {
-            Message = exception.Message
+            Message = exception.Message,
+            InnerError = exception.InnerException?.ToErrorResponse()
         };
 
         return res;

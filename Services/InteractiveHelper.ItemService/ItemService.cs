@@ -22,9 +22,8 @@ internal class ItemService : IItemService
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
 
-        var items = context.Items.AsQueryable();
-
-        items = items.Skip(Math.Max(offset, 0)).Take(Math.Min(limit, 1000));
+        var items = context.Items
+            .Skip(Math.Max(offset, 0)).Take(Math.Min(limit, 1000));
 
         return await items.Select(item => mapper.Map<ItemModel>(item)).ToListAsync();
     }
@@ -73,7 +72,7 @@ internal class ItemService : IItemService
 
     private static async Task<Item> GetItemByIdFromContext(MainDbContext context, int itemId)
     {
-        return await context.Items.FirstOrDefaultAsync(i => i.Id.Equals(itemId))
-            ?? throw new CommonException($"The item with id:{itemId} was not found");
+        return await context.Items.FindAsync(itemId)
+            ?? throw new CommonException(404, $"The item with id:{itemId} was not found");
     }
 }

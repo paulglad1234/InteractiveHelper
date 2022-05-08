@@ -1,5 +1,5 @@
 ﻿using InteractiveHelper.Common.Helpers;
-using InteractiveHelper.Common.Responses;
+using InteractiveHelper.Common.Responses.Errors;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -21,18 +21,18 @@ public static class ValidationConfiguration
         {
             options.InvalidModelStateResponseFactory = context =>
             {
-                var fieldErrors = new List<ErrorResponseFieldInfo>();
+                var fieldErrors = new List<ValidationErrorResponseFieldInfo>();
                 foreach (var item in context.ModelState)
                 {
                     if (item.Value.ValidationState == ModelValidationState.Invalid)
-                        fieldErrors.Add(new ErrorResponseFieldInfo()
+                        fieldErrors.Add(new ValidationErrorResponseFieldInfo()
                         {
                             FieldName = item.Key,
                             Message = string.Join(", ", item.Value.Errors.Select(x => x.ErrorMessage))
                         });
                 }
 
-                var result = new BadRequestObjectResult(new ErrorResponse()
+                var result = new BadRequestObjectResult(new ValidationErrorResponse()
                 {
                     Message = "One or more validation errors occurred.",
                     FieldErrors = fieldErrors
