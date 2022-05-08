@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3001A978-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveHelper.Test", "Test\Template.Test\InteractiveHelper.Test.csproj", "{8ED48B78-5077-429E-BBD0-413D89E1C20B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveHelper.ItemService", "Services\InteractiveHelper.Catalog\InteractiveHelper.ItemService.csproj", "{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveHelper.ItemService", "Services\InteractiveHelper.ItemService\InteractiveHelper.ItemService.csproj", "{8A3BBA28-F31C-4326-93B4-D5D49A5A3405}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

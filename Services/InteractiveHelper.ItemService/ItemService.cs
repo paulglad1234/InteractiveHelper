@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InteractiveHelper.Catalog.Models;
+using InteractiveHelper.ItemService.Models;
 using InteractiveHelper.Common.Exceptions;
 using InteractiveHelper.Db.Context;
 using InteractiveHelper.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InteractiveHelper.Catalog;
+namespace InteractiveHelper.ItemService;
 
 internal class ItemService : IItemService
 {

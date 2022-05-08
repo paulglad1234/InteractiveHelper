@@ -1,6 +1,6 @@
-﻿using InteractiveHelper.Catalog.Models;
+﻿using InteractiveHelper.ItemService.Models;
 
-namespace InteractiveHelper.Catalog;
+namespace InteractiveHelper.ItemService;
 
 public interface IItemService
 {

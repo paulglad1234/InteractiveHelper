@@ -2,9 +2,9 @@
 using FluentValidation;
 using InteractiveHelper.Db.Entities;
 
-namespace InteractiveHelper.Catalog;
+namespace InteractiveHelper.ItemService.Models;
 
-public class UpdateItemModel
+public class AddItemModel
 {
     public string Name { get; set; }
     public string Description { get; set; }
@@ -12,9 +12,9 @@ public class UpdateItemModel
     public string ImagePath { get; set; }
 }
 
-public class UpdateItemModelValidator : AbstractValidator<UpdateItemModel>
+public class AddItemModelValidator : AbstractValidator<AddItemModel>
 {
-    public UpdateItemModelValidator()
+    public AddItemModelValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required.")
@@ -25,10 +25,10 @@ public class UpdateItemModelValidator : AbstractValidator<UpdateItemModel>
     }
 }
 
-public class UpdateItemModelProfile : Profile
+public class AddItemModelProfile : Profile
 {
-    public UpdateItemModelProfile()
+    public AddItemModelProfile()
     {
-        CreateMap<UpdateItemModel, Item>();
+        CreateMap<AddItemModel, Item>();
     }
 }
