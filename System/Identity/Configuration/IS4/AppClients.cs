@@ -10,7 +10,7 @@ public static class AppClients
         {
             new Client
             {
-                ClientId = "swagger",
+                ClientId = "service",
                 ClientSecrets =
                 {
                     new Secret("secret".Sha256())
