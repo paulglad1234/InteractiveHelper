@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using InteractiveHelper.ItemService.Models;
+using System.Text;
 
 namespace InteractiveHelper.Api.Controllers.Items.Models;
 
@@ -9,7 +10,13 @@ public class AddItemRequest
     public string Name { get; set; }
     public string Description { get; set; }
     public float Price { get; set; }
-    public IFormFile Image { get; set; }
+    /// <summary>
+    /// Image byte code
+    /// </summary>
+    public string Image { get; set; }
+
+    public int BrandId { get; set; }
+    public int CategoryId { get; set; }
 
     public class AddItemRequestValidator : AbstractValidator<AddItemRequest>
     {
@@ -23,8 +30,7 @@ public class AddItemRequest
                 .GreaterThan(0f).WithMessage("Price is 0.00 or less");
 
             RuleFor(x => x.Image)
-            .Must(x => Path.GetExtension(x.FileName) == ".jpeg").WithMessage("The file must have .jpg extension")
-            .Must(x => x.Length <= 2048).WithMessage("The file is too large.");
+            .Must(x => x.Length <= 2048).WithMessage("The image is too large.");
         }
     }
 
@@ -33,7 +39,7 @@ public class AddItemRequest
         public AddItemRequestProfile()
         {
             CreateMap<AddItemRequest, AddItemModel>()
-                .ForMember(m => m.Image, a => a.MapFrom(r => r.Image.IFormFileToByteArray()));
+                .ForMember(m => m.Image, a => a.MapFrom(r => Encoding.ASCII.GetBytes(r.Image)));
         }
     }
 }

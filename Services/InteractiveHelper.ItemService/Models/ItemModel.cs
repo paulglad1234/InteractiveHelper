@@ -10,6 +10,9 @@ public class ItemModel
     public string Description { get; set; }
     public float Price { get; set; }
     public byte[] Image { get; set; }
+
+    public int BrandId { get; set; }
+    public int CategoryId { get; set; }
 }
 
 public class ItemModelProfile : Profile
