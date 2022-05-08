@@ -2,7 +2,7 @@
 using FluentValidation;
 using InteractiveHelper.Db.Entities;
 
-namespace InteractiveHelper.ItemService;
+namespace InteractiveHelper.ItemService.Models;
 
 public class UpdateItemModel
 {

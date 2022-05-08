@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Db.Entities;
 
-namespace InteractiveHelper.Catalog.Models;
+namespace InteractiveHelper.ItemService.Models;
 
 public class ItemModel
 {
