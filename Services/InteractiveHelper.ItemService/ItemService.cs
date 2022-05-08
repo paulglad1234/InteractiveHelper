@@ -29,7 +29,7 @@ internal class ItemService : IItemService
         return items.Select(item => mapper.Map<ItemModel>(item));
     }
 
-    public async Task<ItemModel> GetItemById(int itemId)
+    public async Task<ItemModel> GetItem(int itemId)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
 

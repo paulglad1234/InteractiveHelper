@@ -9,7 +9,7 @@ public class ItemModel
     public string Name { get; set; }
     public string Description { get; set; }
     public float Price { get; set; }
-    public string ImagePath { get; set; }
+    public byte[] Image { get; set; }
 }
 
 public class ItemModelProfile : Profile

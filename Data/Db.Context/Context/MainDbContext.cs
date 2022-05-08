@@ -45,6 +45,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<Item>().ToTable("items");
         builder.Entity<Item>().Property(x => x.Name).IsRequired();
         builder.Entity<Item>().Property(x => x.Name).HasMaxLength(200);
+        builder.Entity<Item>().Property(x => x.Image).HasMaxLength(2048);
 
         builder.Entity<Item>().HasOne(x => x.Brand).WithMany(x => x.Items)
             .HasForeignKey(x => x.BrandId).OnDelete(DeleteBehavior.Restrict);
@@ -64,8 +65,8 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
                 {
                     j.Property(ic => ic.Value).HasDefaultValue("-");
                     j.HasKey(t => new { t.ItemId, t.CharacteristicId });
-                }).ToTable("item_characteristics");
+                });
 
-        //builder.Entity<ItemCharacteristic>().Property(x => x.Value).HasMaxLength(20);
+        builder.Entity<ItemCharacteristic>().ToTable("item_characteristics");
     }
 }

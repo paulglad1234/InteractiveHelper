@@ -5,7 +5,7 @@ public class Item : BaseEntity
     public string Name { get; set; }
     public string Description { get; set; }
     public float Price { get; set; }
-    public string ImagePath { get; set; }
+    public byte[] Image { get; set; }
 
     public int BrandId { get; set; }
     public virtual Brand Brand { get; set; }

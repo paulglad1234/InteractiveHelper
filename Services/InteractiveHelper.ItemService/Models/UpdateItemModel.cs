@@ -9,7 +9,7 @@ public class UpdateItemModel
     public string Name { get; set; }
     public string Description { get; set; }
     public float Price { get; set; }
-    public string ImagePath { get; set; }
+    public byte[] Image { get; set; }
 }
 
 public class UpdateItemModelValidator : AbstractValidator<UpdateItemModel>
@@ -22,6 +22,9 @@ public class UpdateItemModelValidator : AbstractValidator<UpdateItemModel>
 
         RuleFor(x => x.Price)
             .GreaterThan(0f).WithMessage("Price is 0.00 or less");
+
+        RuleFor(x => x.Image)
+            .Must(x => x.Length <= 2048);
     }
 }
 

@@ -161,6 +161,19 @@
             </summary>
             <param name="services">Service collection</param>
         </member>
+        <member name="T:InteractiveHelper.Api.Controllers.Items.Convertor">
+            <summary>
+            Contains methods to convert one object to another
+            </summary>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Items.Convertor.IFormFileToByteArray(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Write contents of a file to byte array
+            </summary>
+            <param name="formFile">File</param>
+            <returns>Byte array with file content</returns>
+            <exception cref="T:InteractiveHelper.Common.Exceptions.CommonException">Something went wrong with the file</exception>
+        </member>
         <member name="T:InteractiveHelper.Api.Middleware.ExceptionsMiddleware">
             <summary>
             Global exception catcher
