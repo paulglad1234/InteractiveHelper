@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveHelper.BrandServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveHelper.CategoryService", "Services\InteractiveHelper.CategoryService\InteractiveHelper.CategoryService.csproj", "{D1637133-C63B-42CF-9F03-8511EF88CE90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveHelper.CharacteristicService", "Services\InteractiveHelper.CharacteristicService\InteractiveHelper.CharacteristicService.csproj", "{4638B5A2-39D1-4069-9B00-B15288AE5D7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{D1637133-C63B-42CF-9F03-8511EF88CE90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1637133-C63B-42CF-9F03-8511EF88CE90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1637133-C63B-42CF-9F03-8511EF88CE90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4638B5A2-39D1-4069-9B00-B15288AE5D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4638B5A2-39D1-4069-9B00-B15288AE5D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4638B5A2-39D1-4069-9B00-B15288AE5D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4638B5A2-39D1-4069-9B00-B15288AE5D7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{8A3BBA28-F31C-4326-93B4-D5D49A5A3405} = {211F55F0-B0AA-4468-9290-EF8C16EC545B}
 		{DCEA1235-64D1-4A8D-935C-1007660421D4} = {211F55F0-B0AA-4468-9290-EF8C16EC545B}
 		{D1637133-C63B-42CF-9F03-8511EF88CE90} = {211F55F0-B0AA-4468-9290-EF8C16EC545B}
+		{4638B5A2-39D1-4069-9B00-B15288AE5D7F} = {211F55F0-B0AA-4468-9290-EF8C16EC545B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F8C24A8-9FF7-41E8-AB56-3A7A21E895E4}

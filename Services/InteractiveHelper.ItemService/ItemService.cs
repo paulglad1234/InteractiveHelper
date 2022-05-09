@@ -39,6 +39,9 @@ internal class ItemService : IItemService
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
 
+        CommonException.ThrowIfNull(context.Brands.Find(model.BrandId), "Given brand wasn't found", 400);
+        CommonException.ThrowIfNull(context.Categories.Find(model.BrandId), "Given category wasn't found", 400);
+
         var item = mapper.Map<Item>(model);
         await context.Items.AddAsync(item);
         await context.SaveChangesAsync();

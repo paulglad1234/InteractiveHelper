@@ -1,5 +1,6 @@
 ﻿using InteractiveHelper.BrandService;
 using InteractiveHelper.CategoryService;
+using InteractiveHelper.CharactetisricService;
 using InteractiveHelper.ItemService;
 using InteractiveHelper.Settings;
 
@@ -21,7 +22,8 @@ public static class Bootstrapper
             .AddSettings()
             .AddItemService()
             .AddBrandService()
-            .AddCategoryService();
+            .AddCategoryService()
+            .AddCharacteristicService();
 
         return services;
     }
