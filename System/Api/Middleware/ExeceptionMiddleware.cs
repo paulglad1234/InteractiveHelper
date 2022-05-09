@@ -1,7 +1,7 @@
 ﻿namespace InteractiveHelper.Api.Middleware;
 
 using InteractiveHelper.Common.Extensions;
-using InteractiveHelper.Common.Responses.Errors;
+using InteractiveHelper.Common.Responses;
 using System.Text.Json;
 using InteractiveHelper.Common.Exceptions;
 using FluentValidation;
