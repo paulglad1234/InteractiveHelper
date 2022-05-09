@@ -1,6 +1,6 @@
 ﻿namespace InteractiveHelper.Settings;
 
-public interface IIS4Settings
+public interface IDuendeSettings
 {
     IDbSettings Db { get; }
 }

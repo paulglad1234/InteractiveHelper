@@ -2,6 +2,8 @@
 using InteractiveHelper.Api.Controllers.Characteristics.Models;
 using InteractiveHelper.CharactetisricService;
 using InteractiveHelper.CharactetisricService.Models;
+using InteractiveHelper.Common.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteractiveHelper.Api.Controllers.Characteristics;
@@ -34,6 +36,7 @@ public class CharacteristicsController : ControllerBase
     }
 
     [HttpPut("categories/{id}/characteristics")]
+    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> UpdateCategoryCharacterisrics([FromRoute] int id, 
         [FromBody] IEnumerable<UpdateCharacteristicRequest> characteristicModels)
     {
@@ -44,6 +47,7 @@ public class CharacteristicsController : ControllerBase
     }
 
     [HttpPut("items/{id}/characteristics")]
+    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> UpdateItemCharacteristics([FromRoute] int id, 
         [FromBody] IEnumerable<UpdateItemCharacteristicRequest> itemCharacteristicModels)
     {

@@ -2,6 +2,8 @@
 using InteractiveHelper.Api.Controllers.Categories.Models;
 using InteractiveHelper.CategoryService;
 using InteractiveHelper.CategoryService.Models;
+using InteractiveHelper.Common.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteractiveHelper.Api.Controllers.Categories;
@@ -36,6 +38,7 @@ public class CategoryController : Controller
     }
 
     [HttpPost("")]
+    [Authorize(AppScopes.Write)]
     public async Task<CategoryResponse> AddCategory([FromBody] AddCategoryRequest request)
     {
         var model = mapper.Map<AddCategoryModel>(request);
@@ -45,6 +48,7 @@ public class CategoryController : Controller
     }
 
     [HttpPut("{id}")]
+    [Authorize(AppScopes.Write)]
     public async Task<CategoryResponse> UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryRequest request)
     {
         var model = mapper.Map<UpdateCategoryModel>(request);
@@ -54,6 +58,7 @@ public class CategoryController : Controller
     }
 
     [HttpDelete("{id}")]
+    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteCategory([FromRoute] int id)
     {
         await categoryService.DeleteCategory(id);

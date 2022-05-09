@@ -2,6 +2,8 @@
 using InteractiveHelper.Api.Controllers.Brands.Models;
 using InteractiveHelper.BrandService;
 using InteractiveHelper.BrandService.Models;
+using InteractiveHelper.Common.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteractiveHelper.Api.Controllers.Brands;
@@ -36,6 +38,7 @@ public class BrandController : Controller
     }
 
     [HttpPost("")]
+    [Authorize(AppScopes.Write)]
     public async Task<BrandResponse> AddBrand([FromBody] AddBrandRequest request)
     {
         var model = mapper.Map<AddBrandModel>(request);
@@ -45,6 +48,7 @@ public class BrandController : Controller
     }
 
     [HttpPut("{id}")]
+    [Authorize(AppScopes.Write)]
     public async Task<BrandResponse> UpdateBrand([FromRoute] int id, [FromBody] UpdateBrandRequest request)
     {
         var model = mapper.Map<UpdateBrandModel>(request);
@@ -54,6 +58,7 @@ public class BrandController : Controller
     }
 
     [HttpDelete("{id}")]
+    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteBrand([FromRoute] int id)
     {
         await brandService.DeleteBrand(id);

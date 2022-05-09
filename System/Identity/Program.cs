@@ -3,7 +3,7 @@ using InteractiveHelper.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var settings = new IS4Settings(new SettingsSource());
+var settings = new DuendeSettings(new SettingsSource());
 
 // Add services to the container.
 
@@ -13,7 +13,7 @@ services.AddAppCors();
 services.AddAppDbContext(settings.Db);
 services.AddHttpContextAccessor();
 services.AddSettings();
-services.AddIS4();
+services.AddDuende();
 
 var app = builder.Build();
 

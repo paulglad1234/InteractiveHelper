@@ -2,5 +2,7 @@
 
 public static class AppScopes
 {
-    public static string Common { get; } = "common";
+    public const string Read = "read";
+
+    public const string Write = "write";
 }

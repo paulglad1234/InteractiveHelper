@@ -4,10 +4,11 @@ using InteractiveHelper.Db.Context;
 using InteractiveHelper.Db.Entities;
 using InteractiveHelper.Identity.Configuration.IS4;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography.X509Certificates;
 
 public static class DuendeConfiguration
 {
-    public static IServiceCollection AddIS4(this IServiceCollection services)
+    public static IServiceCollection AddDuende(this IServiceCollection services)
     {
         services
             .AddIdentity<User, IdentityRole<Guid>>(opt =>
@@ -30,9 +31,14 @@ public static class DuendeConfiguration
             .AddInMemoryApiResources(AppResources.Resources)
             .AddInMemoryIdentityResources(AppIdentityResources.Resources)
 
-            //.AddTestUsers(AppApiTestUsers.ApiUsers)
-
-            .AddDeveloperSigningCredential(); // TODO: change for production
+            .AddDeveloperSigningCredential();
+            //.AddSigningCredential(new X509Certificate2(
+            //  Configuration["Jwt:Secret"],
+            //  Configuration["Jwt:Certificate"],
+            //  X509KeyStorageFlags.MachineKeySet |
+            //  X509KeyStorageFlags.PersistKeySet |
+            //  X509KeyStorageFlags.Exportable
+            //));
 
         return services;
     }

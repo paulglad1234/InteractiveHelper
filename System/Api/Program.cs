@@ -29,6 +29,8 @@ services.AddAppVersions();
 
 services.AddAppCors();
 
+services.AddAppAuth(settings);
+
 services.AddControllers().AddValidator();
 
 services.AddAppServices();
@@ -49,8 +51,9 @@ app.UseAppCors();
 
 app.UseSerilogRequestLogging();
 
+app.UseAppAuth();
+
 app.UseAppSwagger();
-//app.UseAuthorization();
 
 app.MapControllers();
 

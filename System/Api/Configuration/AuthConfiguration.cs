@@ -6,6 +6,7 @@ using InteractiveHelper.Settings;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using InteractiveHelper.Common.Security;
 
 /// <summary>
 /// Authentication and authorization configuration class
@@ -58,6 +59,8 @@ public static class AuthConfiguration
 
         services.AddAuthorization(options =>
         {
+            options.AddPolicy(AppScopes.Read, policy => policy.RequireClaim("scope", AppScopes.Read));
+            options.AddPolicy(AppScopes.Write, policy => policy.RequireClaim("scope", AppScopes.Write));
         });
 
         return services;

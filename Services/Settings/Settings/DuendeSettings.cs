@@ -1,13 +1,13 @@
 ﻿namespace InteractiveHelper.Settings;
 
-public class IS4Settings : IIS4Settings
+public class DuendeSettings : IDuendeSettings
 {
     private readonly ISettingsSource source;
     private readonly IDbSettings dbSettings;
 
-    public IS4Settings(ISettingsSource source) => this.source = source;
+    public DuendeSettings(ISettingsSource source) => this.source = source;
 
-    public IS4Settings(ISettingsSource source, IDbSettings dbSettings)
+    public DuendeSettings(ISettingsSource source, IDbSettings dbSettings)
     {
         this.source = source;
         this.dbSettings = dbSettings;

@@ -22,14 +22,14 @@ public class IdentityServerStartup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        var settings = new IS4Settings(new SettingsSource(configuration));
+        var settings = new DuendeSettings(new SettingsSource(configuration));
 
         services.AddAppCors();
         services.AddAppDbContext(settings.Db);
         services.AddRouting();
         services.AddHttpContextAccessor();
         services.AddSettings();
-        services.AddIS4();
+        services.AddDuende();
 
         configurator?.Invoke(services); // kinda same as builder.Build(). All services are actually registered only here
     }

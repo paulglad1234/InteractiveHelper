@@ -13,7 +13,7 @@ public static class Bootstrapper
         services.AddSingleton<IEmailSettings, EmailSettings>();
         services.AddSingleton<IRabbitMqSettings, RabbitMqSettings>();
         services.AddSingleton<IApiSettings, ApiSettings>();
-        services.AddSingleton<IIS4Settings, IS4Settings>();
+        services.AddSingleton<IDuendeSettings, DuendeSettings>();
 
         return services;
     }

@@ -8,6 +8,7 @@ public static class AppApiScopes
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new ApiScope(AppScopes.Common, "Common scope")
+            new ApiScope(AppScopes.Read, "Read content"),
+            new ApiScope(AppScopes.Write, "Create, Update and Delete content")
         };
 }

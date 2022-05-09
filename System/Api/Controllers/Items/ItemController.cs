@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Api.Controllers.Items.Models;
+using InteractiveHelper.Common.Security;
 using InteractiveHelper.ItemService;
 using InteractiveHelper.ItemService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteractiveHelper.Api.Controllers.Items;
@@ -37,6 +39,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpPost("")]
+    [Authorize(AppScopes.Write)]
     public async Task<ItemResponse> AddItem([FromBody] AddItemRequest request)
     {
         var model = mapper.Map<AddItemModel>(request);
@@ -46,6 +49,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(AppScopes.Write)]
     public async Task<ItemResponse> UpdateItem([FromRoute] int id, [FromBody] UpdateItemRequest request)
     {
         var model = mapper.Map<UpdateItemModel>(request);
@@ -55,6 +59,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteItem([FromRoute] int id)
     {
         await itemService.DeleteItem(id);
