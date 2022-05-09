@@ -11,6 +11,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     public DbSet<Category> Categories { get; set; }
     public DbSet<Characteristic> Characteristics { get; set; }
     public DbSet<Item> Items { get; set; }
+    public DbSet<ItemCharacteristic> ItemCharacteristics { get; set; }
 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
 
@@ -41,6 +42,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<Characteristic>().Property(x => x.Name).HasMaxLength(30);
         builder.Entity<Characteristic>().HasOne(x => x.Category).WithMany(x => x.Characteristics)
             .HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<Characteristic>().HasIndex(x => new { x.Name, x.CategoryId }).IsUnique();
 
         builder.Entity<Item>().ToTable("items");
         builder.Entity<Item>().Property(x => x.Name).IsRequired();
@@ -65,6 +67,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
                      .OnDelete(DeleteBehavior.Cascade), // will it delete the characteristic then?
                 j =>
                 {
+                    j.Property(ic => ic.Value).HasMaxLength(50);
                     j.Property(ic => ic.Value).HasDefaultValue("-");
                     j.HasKey(t => new { t.ItemId, t.CharacteristicId });
                 });
