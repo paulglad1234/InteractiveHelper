@@ -15,6 +15,6 @@ public class ItemCharacteristicModelProfile : Profile
     public ItemCharacteristicModelProfile()
     {
         CreateMap<ItemCharacteristic, ItemCharacteristicModel>()
-            .ForMember(model => model.Name, a => a.MapFrom(ic => ic.Characteristic.Name));
+            .ForMember(model => model.Name, a => a.MapFrom(ic => ic.Characteristic.Name)); // Thanks to ef core lazy loading proxy
     }
 }

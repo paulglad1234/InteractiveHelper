@@ -42,9 +42,14 @@ public class CommonException : Exception
 
     #endregion
 
-    public static void ThrowIf(Func<bool> predicate, string message, int code = -1)
+    //public static void ThrowIf(Func<bool> predicate, string message, int code = -1)
+    //{
+    //    if (predicate.Invoke())
+    //        throw new CommonException(code, message);
+    //}
+    public static void ThrowIf(bool condition, string message, int code = -1)
     {
-        if (predicate.Invoke())
+        if (condition)
             throw new CommonException(code, message);
     }
 

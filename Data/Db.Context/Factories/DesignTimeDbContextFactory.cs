@@ -14,6 +14,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MainDbCont
              .Build();
 
         var options = new DbContextOptionsBuilder<MainDbContext>()
+                      .UseLazyLoadingProxies()
                       .UseSqlServer(configuration.GetConnectionString("MainDbContext"), opts =>
                       {
                           //opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)

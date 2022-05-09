@@ -6,6 +6,7 @@ namespace InteractiveHelper.CharactetisricService.Models;
 
 public class UpdateCharacteristicModel
 {
+    public int? Id { get; set; }
     public string Name { get; set; }
 }
 
@@ -23,6 +24,7 @@ public class UpdateCharacteristicModelProfile : Profile
 {
     public UpdateCharacteristicModelProfile()
     {
-        CreateMap<UpdateCharacteristicModel, Characteristic>();
+        CreateMap<UpdateCharacteristicModel, Characteristic>()
+            .ForMember(ch => ch.Id, a => a.Condition(model => model.Id is not null));
     }
 }

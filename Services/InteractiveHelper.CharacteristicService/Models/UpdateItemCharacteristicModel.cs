@@ -10,13 +10,12 @@ public class UpdateItemCharacteristicModel
     public string Value { get; set; }
 }
 
-public class UpdateItemCharacteristicModelValidator : AbstractValidator<UpdateCharacteristicModel>
+public class UpdateItemCharacteristicModelValidator : AbstractValidator<UpdateItemCharacteristicModel>
 {
     public UpdateItemCharacteristicModelValidator()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is required.")
-            .MaximumLength(30).WithMessage("Name is too long.");
+        RuleFor(x => x.Value)
+            .MaximumLength(50).WithMessage("Name is too long.");
     }
 }
 

@@ -13,6 +13,6 @@ public class DbContextOptionsFactory
 
     public static Action<DbContextOptionsBuilder> Configure(string connectionString)
     {
-        return (builder) => builder.UseSqlServer(connectionString);
+        return (builder) => builder.UseLazyLoadingProxies().UseSqlServer(connectionString);
     }
 }

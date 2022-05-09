@@ -24,6 +24,6 @@ public class UpdateItemCharacteristicRequestProfile : Profile
 {
     public UpdateItemCharacteristicRequestProfile()
     {
-        CreateMap<UpdateItemCharacteristicRequest, ItemCharacteristicModel>();
+        CreateMap<UpdateItemCharacteristicRequest, UpdateItemCharacteristicModel>();
     }
 }

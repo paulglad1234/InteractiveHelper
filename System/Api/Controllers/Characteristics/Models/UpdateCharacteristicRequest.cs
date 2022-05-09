@@ -6,6 +6,7 @@ namespace InteractiveHelper.Api.Controllers.Characteristics.Models;
 
 public class UpdateCharacteristicRequest
 {
+    public int? Id { get; set; }
     public string Name { get; set; }
 }
 
@@ -23,6 +24,6 @@ public class UpdateCharacteristicRequestProfile : Profile
 {
     public UpdateCharacteristicRequestProfile()
     {
-        CreateMap<UpdateCharacteristicRequest, CharacteristicModel>();
+        CreateMap<UpdateCharacteristicRequest, UpdateCharacteristicModel>();
     }
 }
