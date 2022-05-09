@@ -10,9 +10,9 @@ public class ItemCharacteristicModel
     public string Value { get; set; }
 }
 
-public class ItemCharactericticModelProfile : Profile
+public class ItemCharacteristicModelProfile : Profile
 {
-    public ItemCharactericticModelProfile()
+    public ItemCharacteristicModelProfile()
     {
         CreateMap<ItemCharacteristic, ItemCharacteristicModel>()
             .ForMember(model => model.Name, a => a.MapFrom(ic => ic.Characteristic.Name));

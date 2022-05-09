@@ -27,7 +27,7 @@ public class CharacteristicService : ICharacteristicService
         return mapper.Map<IEnumerable<CharacteristicModel>>(category.Characteristics.ToList());
     }
 
-    public async Task<IEnumerable<ItemCharacteristicModel>> GetItemCharacterictics(int itemId)
+    public async Task<IEnumerable<ItemCharacteristicModel>> GetItemCharacteristics(int itemId)
     {
         throw new NotImplementedException();
     }
@@ -37,7 +37,7 @@ public class CharacteristicService : ICharacteristicService
         throw new NotImplementedException();
     }
 
-    public async Task UpdateItemCharacterictics(int itemId, IEnumerable<UpdateItemCharacteristicModel> itemCharactericticModels)
+    public async Task UpdateItemCharacteristics(int itemId, IEnumerable<UpdateItemCharacteristicModel> itemCharacteristicModels)
     {
         throw new NotImplementedException();
     }

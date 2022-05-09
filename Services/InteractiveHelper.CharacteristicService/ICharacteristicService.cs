@@ -6,6 +6,6 @@ public interface ICharacteristicService
 {
     Task<IEnumerable<CharacteristicModel>> GetCategoryCharacteristics(int categoryId);
     Task UpdateCategoryCharacterisrics(int categoryId, IEnumerable<UpdateCharacteristicModel> characteristicModels);
-    Task<IEnumerable<ItemCharacteristicModel>> GetItemCharacterictics(int itemId);
-    Task UpdateItemCharacterictics(int itemId, IEnumerable<UpdateItemCharacteristicModel> itemCharactericticModels);
+    Task<IEnumerable<ItemCharacteristicModel>> GetItemCharacteristics(int itemId);
+    Task UpdateItemCharacteristics(int itemId, IEnumerable<UpdateItemCharacteristicModel> itemCharacteristicModels);
 }

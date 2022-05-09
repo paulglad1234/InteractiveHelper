@@ -9,9 +9,9 @@ public class CharacteristicModel
     public string Name { get; set; }
 }
 
-public class CharactericticModelProfile : Profile
+public class CharacteristicModelProfile : Profile
 {
-    public CharactericticModelProfile()
+    public CharacteristicModelProfile()
     {
         CreateMap<Characteristic, CharacteristicModel>();
     }
