@@ -29,6 +29,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<Brand>().ToTable("brands");
         builder.Entity<Brand>().Property(x => x.Name).IsRequired();
         builder.Entity<Brand>().Property(x => x.Name).HasMaxLength(50);
+        builder.Entity<Brand>().HasIndex(x => x.Name).IsUnique();
 
         builder.Entity<Category>().ToTable("categories");
         builder.Entity<Category>().Property(x => x.Title).IsRequired();
@@ -39,7 +40,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<Characteristic>().Property(x => x.Name).IsRequired();
         builder.Entity<Characteristic>().Property(x => x.Name).HasMaxLength(30);
         builder.Entity<Characteristic>().HasOne(x => x.Category).WithMany(x => x.Characteristics)
-            .HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Item>().ToTable("items");
         builder.Entity<Item>().Property(x => x.Name).IsRequired();
@@ -55,11 +56,13 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
                 j => j
                      .HasOne(ic => ic.Characteristic)
                      .WithMany(characteristic => characteristic.ItemCharacteristics)
-                     .HasForeignKey(ic => ic.CharacteristicId),
+                     .HasForeignKey(ic => ic.CharacteristicId)
+                     .OnDelete(DeleteBehavior.Cascade), // will it delete the item then?
                 j => j
                      .HasOne(ic => ic.Item)
                      .WithMany(item => item.ItemCharacteristics)
-                     .HasForeignKey(ic => ic.ItemId),
+                     .HasForeignKey(ic => ic.ItemId)
+                     .OnDelete(DeleteBehavior.Cascade), // will it delete the characteristic then?
                 j =>
                 {
                     j.Property(ic => ic.Value).HasDefaultValue("-");
