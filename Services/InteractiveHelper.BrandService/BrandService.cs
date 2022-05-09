@@ -74,7 +74,7 @@ internal class BrandService : IBrandService
 
         var brand = await GetBrandByIdFromContext(context, brandId);
 
-        var items = context.Items.Where(i => i.BrandId.Equals(brandId))
+        var items = brand.Items.AsQueryable()
             .Skip(Math.Max(offset, 0)).Take(Math.Min(limit, 1000));
 
         return await items.Select(item => mapper.Map<ItemModel>(item)).ToListAsync();

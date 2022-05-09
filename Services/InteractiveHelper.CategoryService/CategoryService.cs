@@ -44,9 +44,9 @@ internal class CategoryService : ICategoryService
 
         var category = await GetCategoryByIdFromContext(context, categoryId);
 
-        var category2 = mapper.Map(model, category);
+        category = mapper.Map(model, category);
 
-        context.Categories.Update(category2);
+        context.Categories.Update(category);
         context.SaveChanges();
 
         return mapper.Map<CategoryModel>(category);
@@ -74,9 +74,7 @@ internal class CategoryService : ICategoryService
 
         var category = await GetCategoryByIdFromContext(context, categoryId);
 
-        //var items = category.Items.AsQueryable();
-
-        var items = context.Items.Where(i => i.CategoryId.Equals(categoryId))
+        var items = category.Items.AsQueryable()
             .Skip(Math.Max(offset, 0)).Take(Math.Min(limit, 1000));
 
         return await items.Select(item => mapper.Map<ItemModel>(item)).ToListAsync();

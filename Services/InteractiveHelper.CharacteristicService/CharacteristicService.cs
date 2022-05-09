@@ -48,50 +48,67 @@ public class CharacteristicService : ICharacteristicService
         var category = await context.Categories.FindAsync(categoryId);
         CommonException.ThrowIfNull(category, "Given category not found.", 404);
 
-        foreach (var characteristicModel in characteristicModels)
+        // Remove deleted characteristics
+        context.Characteristics.RemoveRange(
+            category.Characteristics.AsQueryable().Where( // maybe should remove Where and just remove all category's chars
+                                            // since characteristicModels should contain all of them
+                characteristic => !characteristicModels.Any(
+                    model => model.Id == characteristic.Id))); // not sure if int?.Equals(int) won't always return false
+
+        // Create added characteristics
+        var characteristicsToAdd = mapper.Map<IEnumerable<Characteristic>>(
+            characteristicModels.Where(model => model.Id is null));
+        foreach (var characteristic in characteristicsToAdd) 
+            characteristic.Category = category;
+        context.Characteristics.AddRange(characteristicsToAdd);
+
+        // Update changed characteristics
+        foreach (var characteristicModel in characteristicModels
+            .Where(model => model.Id is not null)) // The characteristic is old and needs to be updated
         {
-            if (characteristicModel.Id is null)
-            {
-                var characteristic = mapper.Map<Characteristic>(characteristicModel);
-                characteristic.Category = category;
-                context.Characteristics.Add(characteristic);
-            }
-            else
-            {
-                var characteristic = context.Characteristics.Find(characteristicModel.Id);
-                CommonException.ThrowIfNull(characteristic, $"Characteristic with id={characteristicModel.Id} does not exist", 400);
-                characteristic = mapper.Map(characteristicModel, characteristic);
-                context.Characteristics.Update(characteristic);
-            }
+            var characteristic = category.Characteristics.AsQueryable()
+                .FirstOrDefault(ch => ch.Id.Equals(characteristicModel.Id));
+            CommonException.ThrowIfNull(characteristic, $"Characteristic with id={characteristicModel.Id} does not exist", 400);
+            characteristic = mapper.Map(characteristicModel, characteristic);
+            context.Characteristics.Update(characteristic);
         }
 
         await context.SaveChangesAsync();
     }
 
     public async Task UpdateItemCharacteristics(int itemId, IEnumerable<UpdateItemCharacteristicModel> itemCharacteristicModels)
-    {   // TODO: rethink this, maybe use Contains<>() method
+    {
         var context = await dbContextFactory.CreateDbContextAsync();
         var item = await context.Items.FindAsync(itemId);
         CommonException.ThrowIfNull(item, "Item not found", 404);
-        var category = await context.Categories.FindAsync(item.CategoryId);
+        var category = item.Category; // Thanks, lazy loading
         CommonException.ThrowIfNull(category, "Item's category does not exist");
+
+        // Remove deleted
+        context.ItemCharacteristics.RemoveRange(item.ItemCharacteristics.AsQueryable()
+            .Where(ic => !itemCharacteristicModels.Any(model => model.CharacteristicId == ic.CharacteristicId)));
 
         foreach (var itemCharacteristicModel in itemCharacteristicModels)
         {
-            // TODO: The following checks may affect performance since they go repeatedly
-            var characteristic = await context.Characteristics.FindAsync(itemCharacteristicModel.CharacteristicId);
+            // Search characteristic in category
+            var characteristic = category.Characteristics.AsQueryable().FirstOrDefault(
+                ch => ch.Id.Equals(itemCharacteristicModel.CharacteristicId));
             CommonException.ThrowIfNull(characteristic, 
-                $"Characteristic ({itemCharacteristicModel.CharacteristicId}) does not exist. Add it to the category first.");
-            CommonException.ThrowIf(characteristic.CategoryId != category.Id,
-                $"Characteristic ({itemCharacteristicModel.CharacteristicId}) does not belong to item's ({itemId}) category ({category.Id}");
+                $"Characteristic ({itemCharacteristicModel.CharacteristicId}) does not exist " +
+                $"or does not belong to item's ({itemId}) category ({category.Id}.\r\n" +
+                $"Add it to the category first.");
 
-            var itemCharacteristic = await context.ItemCharacteristics.FindAsync(itemId, characteristic.Id);
+            var itemCharacteristic = item.ItemCharacteristics.AsQueryable()
+                .FirstOrDefault(ic => ic.CharacteristicId.Equals(characteristic.Id));
+
+            // Add if does not exist
             if (itemCharacteristic is null)
             {
                 itemCharacteristic = mapper.Map<ItemCharacteristic>(itemCharacteristicModel);
                 itemCharacteristic.Item = item;
                 context.ItemCharacteristics.Add(itemCharacteristic);
-            } 
+            }
+            // Update if does
             else
             {
                 itemCharacteristic = mapper.Map(itemCharacteristicModel, itemCharacteristic);
