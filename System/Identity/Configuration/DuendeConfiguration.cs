@@ -30,6 +30,7 @@ public static class DuendeConfiguration
             .AddInMemoryClients(AppClients.Clients)
             .AddInMemoryApiResources(AppResources.Resources)
             .AddInMemoryIdentityResources(AppIdentityResources.Resources)
+            .AddTestUsers(AppApiTestUsers.ApiUsers)
 
             .AddDeveloperSigningCredential();
             //.AddSigningCredential(new X509Certificate2(

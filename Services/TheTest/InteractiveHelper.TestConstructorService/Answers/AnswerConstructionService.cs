@@ -20,7 +20,7 @@ public class AnswerConstructionService : IAnswerConstructionService
 
     public async Task<AnswerModel> AddNewAnswerToQuestion(int questionId, AddAnswerModel model)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var answer = mapper.Map<Answer>(model);
         var question = await context.Questions.FindAsync(questionId);
         CommonException.ThrowIfNull(question, $"Question with id {questionId} not found", 404);
@@ -33,7 +33,7 @@ public class AnswerConstructionService : IAnswerConstructionService
 
     public async Task<IEnumerable<AnswerModel>> GetQuestionAnswers(int questionId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var question = await context.Questions.FindAsync(questionId);
         CommonException.ThrowIfNull(question, $"Question with id {questionId} not found", 404);
 
@@ -42,7 +42,7 @@ public class AnswerConstructionService : IAnswerConstructionService
 
     public async Task RemoveAnswer(int answerId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var answer = await context.Answers.FindAsync(answerId);
         CommonException.ThrowIfNull(answer, $"Answer with id {answerId} not found", 404);
         context.Answers.Remove(answer);
@@ -52,7 +52,7 @@ public class AnswerConstructionService : IAnswerConstructionService
 
     public async Task UpdateAnswer(int answerId, UpdateAnswerModel model)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var answer = await context.Answers.FindAsync(answerId);
         CommonException.ThrowIfNull(answer, $"Answer with id {answerId} not found", 404);
 

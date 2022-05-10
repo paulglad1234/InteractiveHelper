@@ -20,7 +20,7 @@ public class QuizConstructionService : IQuizConstructionService
 
     public async Task<QuizModel> CreateNewQuiz()
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var quiz = await context.Quizes.AddAsync(new Quiz());
         await context.SaveChangesAsync();
 
@@ -29,14 +29,14 @@ public class QuizConstructionService : IQuizConstructionService
 
     public async Task<IEnumerable<QuizModel>> GetAllQuizes()
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
 
         return mapper.Map<IEnumerable<QuizModel>>(await context.Quizes.ToListAsync());
     }
 
     public async Task RemoveQuiz(int quizId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var quiz = await context.Quizes.FindAsync(quizId);
         CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
 
@@ -46,7 +46,7 @@ public class QuizConstructionService : IQuizConstructionService
 
     public async Task SetActiveQuiz(int quizId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var quiz = await context.Quizes.FindAsync(quizId);
         CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
         quiz.IsActive = true;

@@ -20,7 +20,7 @@ public class QuestionConstructionService : IQuestionConstructionService
 
     public async Task<QuestionModel> AddQuestionToQuiz(int quizId, AddQuestionModel model)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var quiz = await context.Quizes.FindAsync(quizId);
         CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
         var question = mapper.Map<Question>(model);
@@ -33,7 +33,7 @@ public class QuestionConstructionService : IQuestionConstructionService
 
     public async Task<IEnumerable<QuestionModel>> GetQuizQuestions(int quizId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var quiz = await context.Quizes.FindAsync(quizId);
         CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
 
@@ -42,7 +42,7 @@ public class QuestionConstructionService : IQuestionConstructionService
 
     public async Task RemoveQuestion(int questionId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var question = await context.Questions.FindAsync(questionId);
         CommonException.ThrowIfNull(question, $"Question with id {questionId} not found", 404);
 
@@ -52,7 +52,7 @@ public class QuestionConstructionService : IQuestionConstructionService
 
     public async Task UpdateQuestion(int questionId, UpdateQuestionModel model)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var question = await context.Questions.FindAsync(questionId);
         CommonException.ThrowIfNull(question, $"Question with id {questionId} not found", 404);
 

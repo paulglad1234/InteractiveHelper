@@ -20,7 +20,7 @@ public class CharacteristicService : ICharacteristicService
 
     public async Task<IEnumerable<CharacteristicModel>> GetCategoryCharacteristics(int categoryId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
 
         var category = await context.Categories.FindAsync(categoryId);
         CommonException.ThrowIfNull(category, "Given category not found.", 404);
@@ -32,7 +32,7 @@ public class CharacteristicService : ICharacteristicService
 
     public async Task<IEnumerable<ItemCharacteristicModel>> GetItemCharacteristics(int itemId)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
 
         var item = await context.Items.FindAsync(itemId);
         CommonException.ThrowIfNull(item, "Item not found", 404);
@@ -44,7 +44,7 @@ public class CharacteristicService : ICharacteristicService
 
     public async Task UpdateCategoryCharacterisrics(int categoryId, IEnumerable<UpdateCharacteristicModel> characteristicModels)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var category = await context.Categories.FindAsync(categoryId);
         CommonException.ThrowIfNull(category, "Given category not found.", 404);
 
@@ -78,7 +78,7 @@ public class CharacteristicService : ICharacteristicService
 
     public async Task UpdateItemCharacteristics(int itemId, IEnumerable<UpdateItemCharacteristicModel> itemCharacteristicModels)
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
+        using var context = await dbContextFactory.CreateDbContextAsync();
         var item = await context.Items.FindAsync(itemId);
         CommonException.ThrowIfNull(item, "Item not found", 404);
         var category = item.Category; // Thanks, lazy loading
