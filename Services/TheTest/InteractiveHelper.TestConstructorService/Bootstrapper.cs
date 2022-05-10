@@ -9,7 +9,7 @@ public static class Bootstrapper
     {
         services.AddSingleton<IQuizConstructionService, QuizConstructionService>();
         services.AddSingleton<IQuestionConstructionService, QuestionConstructionService>();
-        services.AddSingleton<IAnswerConstrucionService, AnswerConstructionService>();
+        services.AddSingleton<IAnswerConstructionService, AnswerConstructionService>();
 
         services.AddSingleton<IResultGenerator, ResultGenerator>();
         services.AddSingleton<IResultConstructionService, ResultConstructionService>();

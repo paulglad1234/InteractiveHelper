@@ -2,7 +2,7 @@
 
 namespace InteractiveHelper.QuizConstructionServices;
 
-public interface IAnswerConstrucionService
+public interface IAnswerConstructionService
 {
     Task<IEnumerable<AnswerModel>> GetQuestionAnswers(int questionId);
     Task<AnswerModel> AddNewAnswerToQuestion(int questionId, AddAnswerModel model);

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InteractiveHelper.QuizConstructionServices;
 
-public class AnswerConstructionService : IAnswerConstrucionService
+public class AnswerConstructionService : IAnswerConstructionService
 {
     private readonly IDbContextFactory<MainDbContext> dbContextFactory;
     private readonly IMapper mapper;
