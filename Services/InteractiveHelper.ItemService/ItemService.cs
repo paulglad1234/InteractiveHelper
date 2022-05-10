@@ -2,7 +2,7 @@
 using InteractiveHelper.ItemService.Models;
 using InteractiveHelper.Common.Exceptions;
 using InteractiveHelper.Db.Context;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.Catalog;
 using Microsoft.EntityFrameworkCore;
 
 namespace InteractiveHelper.ItemService;

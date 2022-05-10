@@ -1,4 +1,4 @@
-﻿namespace InteractiveHelper.Db.Entities;
+﻿namespace InteractiveHelper.Db.Entities.User;
 
 using Microsoft.AspNetCore.Identity;
 

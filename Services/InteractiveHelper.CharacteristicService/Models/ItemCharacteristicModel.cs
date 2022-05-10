@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.Catalog;
 
 namespace InteractiveHelper.CharactetisricService.Models;
 

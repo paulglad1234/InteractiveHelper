@@ -4,6 +4,7 @@ using InteractiveHelper.Db.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InteractiveHelper.Db.Context.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220510001134_THETEST")]
+    partial class THETEST
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,7 +154,8 @@ namespace InteractiveHelper.Db.Context.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<float>("Price")
-                        .HasColumnType("real");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("real(10)");
 
                     b.Property<Guid>("Uid")
                         .HasColumnType("uniqueidentifier");

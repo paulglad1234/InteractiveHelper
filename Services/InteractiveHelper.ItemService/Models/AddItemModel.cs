@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.Catalog;
 
 namespace InteractiveHelper.ItemService.Models;
 
@@ -24,7 +24,7 @@ public class AddItemModelValidator : AbstractValidator<AddItemModel>
             .MaximumLength(200).WithMessage("Name is too long.");
 
         RuleFor(x => x.Price)
-            .GreaterThan(0f).WithMessage("Price is 0.00 or less");
+            .GreaterThan(0).WithMessage("Price is 0.00 or less");
 
         RuleFor(x => x.Image)
             .Must(x => x.Length <= 2048);

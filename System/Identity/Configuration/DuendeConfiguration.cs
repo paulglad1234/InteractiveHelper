@@ -1,7 +1,7 @@
 ﻿namespace InteractiveHelper.Identity.Configuration;
 
 using InteractiveHelper.Db.Context;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.User;
 using InteractiveHelper.Identity.Configuration.IS4;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Cryptography.X509Certificates;

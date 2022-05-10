@@ -1,7 +1,7 @@
 ﻿namespace InteractiveHelper.Api.Configuration;
 
 using InteractiveHelper.Db.Context;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.User;
 using InteractiveHelper.Settings;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Identity;

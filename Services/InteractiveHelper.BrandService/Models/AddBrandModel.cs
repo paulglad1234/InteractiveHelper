@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.Catalog;
 
 namespace InteractiveHelper.BrandService.Models;
 

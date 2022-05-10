@@ -4,7 +4,7 @@ using InteractiveHelper.Test.Common.Extensions;
 using InteractiveHelper.Test.ApiServerTest;
 using InteractiveHelper.Test.IdentityServerTest;
 using InteractiveHelper.Db.Context;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.User;
 using InteractiveHelper.Identity;
 using InteractiveHelper.Settings;
 using Duende.IdentityServer.Test;

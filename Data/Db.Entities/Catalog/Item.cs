@@ -1,4 +1,6 @@
-﻿namespace InteractiveHelper.Db.Entities;
+﻿using InteractiveHelper.Db.Entities.TheTest;
+
+namespace InteractiveHelper.Db.Entities.Catalog;
 
 public class Item : BaseEntity
 {
@@ -15,4 +17,5 @@ public class Item : BaseEntity
 
     public virtual ICollection<Characteristic> Characteristics { get; set; }
     public virtual ICollection<ItemCharacteristic> ItemCharacteristics { get; set; }
+    public virtual ICollection<Result> Results { get; set; }
 }

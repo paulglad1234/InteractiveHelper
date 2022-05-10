@@ -1,4 +1,4 @@
-﻿using InteractiveHelper.Db.Entities;
+﻿using InteractiveHelper.Db.Entities.Catalog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

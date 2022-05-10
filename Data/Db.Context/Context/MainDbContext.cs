@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using InteractiveHelper.Db.Entities;
+using InteractiveHelper.Db.Entities.User;
+using InteractiveHelper.Db.Entities.Catalog;
+using InteractiveHelper.Db.Entities.TheTest;
 
 namespace InteractiveHelper.Db.Context;
 
@@ -19,6 +21,8 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         base.OnModelCreating(builder);
 
+        #region User
+
         builder.Entity<User>().ToTable("users");
         builder.Entity<IdentityRole<Guid>>().ToTable("user_roles");
         builder.Entity<IdentityUserToken<Guid>>().ToTable("user_tokens");
@@ -26,6 +30,10 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<IdentityRoleClaim<Guid>>().ToTable("user_role_claims");
         builder.Entity<IdentityUserLogin<Guid>>().ToTable("user_logins");
         builder.Entity<IdentityUserClaim<Guid>>().ToTable("user_claims");
+
+        #endregion
+
+        #region Catalog
 
         builder.Entity<Brand>().ToTable("brands");
         builder.Entity<Brand>().Property(x => x.Name).IsRequired();
@@ -48,6 +56,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<Item>().Property(x => x.Name).IsRequired();
         builder.Entity<Item>().Property(x => x.Name).HasMaxLength(200);
         builder.Entity<Item>().Property(x => x.Image).HasMaxLength(2048);
+        //builder.Entity<Item>().Property(x => x.Price).HasPrecision(10,2); something went wrong with it
 
         builder.Entity<Item>().HasOne(x => x.Brand).WithMany(x => x.Items)
             .HasForeignKey(x => x.BrandId).OnDelete(DeleteBehavior.Restrict);
@@ -73,5 +82,39 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
                 });
 
         builder.Entity<ItemCharacteristic>().ToTable("item_characteristics");
+
+        #endregion
+
+        #region TheTest
+
+        builder.Entity<TheTest>().ToTable("the_tests");
+        //builder.Entity<TheTest>().HasIndex(x => x.IsActive).HasFilter("[IsActive] = true").IsUnique();
+
+        builder.Entity<Question>().ToTable("questions");
+        builder.Entity<Question>().Property(x => x.Text).IsRequired();
+        builder.Entity<Question>().Property(x => x.Text).HasMaxLength(500);
+        builder.Entity<Question>().HasOne(x => x.Test).WithMany(x => x.Questions)
+            .HasForeignKey(x => x.TestId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Answer>().ToTable("answers");
+        builder.Entity<Answer>().Property(x => x.Text).HasMaxLength(200);
+        builder.Entity<Answer>().Property(x => x.Text).IsRequired();
+        builder.Entity<Answer>().HasOne(x => x.Question).WithMany(x => x.Answers)
+            .HasForeignKey(x => x.QuestionId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Result>().ToTable("results");
+        builder.Entity<Result>().Property(x => x.Conclusion).IsRequired();
+        builder.Entity<Result>().Property(x => x.Conclusion).HasMaxLength(1000);
+        builder.Entity<Result>().HasOne(x => x.Test).WithMany(x => x.Results)
+            .HasForeignKey(x => x.TestId).OnDelete(DeleteBehavior.Cascade);
+
+        // it even made the indexes right, according to THETEST migration.
+        // Because searching is supposed to be done excactly by x.Results
+        builder.Entity<Result>().HasMany(x => x.Answers).WithMany(x => x.Results)
+            .UsingEntity(e => e.ToTable("result_answers"));
+        builder.Entity<Result>().HasMany(x => x.Items).WithMany(x => x.Results)
+            .UsingEntity(e => e.ToTable("itemset_results"));
+
+        #endregion
     }
 }
