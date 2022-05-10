@@ -1,7 +1,8 @@
-﻿namespace InteractiveHelper.Db.Entities.TheTest;
+﻿namespace InteractiveHelper.Db.Entities.Quiz;
 
 public class Answer : BaseEntity
 {
+    public int OrderNumber { get; set; }
     public string Text { get; set; }
 
     //public int? Metric { get; set; }

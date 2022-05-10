@@ -1,6 +1,7 @@
 ﻿using InteractiveHelper.BrandService;
 using InteractiveHelper.CategoryService;
 using InteractiveHelper.CharactetisricService;
+using InteractiveHelper.QuizConstructionServices;
 using InteractiveHelper.ItemService;
 using InteractiveHelper.Settings;
 
@@ -23,7 +24,8 @@ public static class Bootstrapper
             .AddItemService()
             .AddBrandService()
             .AddCategoryService()
-            .AddCharacteristicService();
+            .AddCharacteristicService()
+            .AddQuizConstructorServices();
 
         return services;
     }

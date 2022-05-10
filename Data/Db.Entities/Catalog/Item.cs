@@ -1,4 +1,4 @@
-﻿using InteractiveHelper.Db.Entities.TheTest;
+﻿using InteractiveHelper.Db.Entities.Quiz;
 
 namespace InteractiveHelper.Db.Entities.Catalog;
 

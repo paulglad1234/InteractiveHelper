@@ -38,6 +38,7 @@
     <ProjectReference Include="..\..\Services\InteractiveHelper.CharacteristicService\InteractiveHelper.CharacteristicService.csproj" />
     <ProjectReference Include="..\..\Services\InteractiveHelper.ItemService\InteractiveHelper.ItemService.csproj" />
     <ProjectReference Include="..\..\Services\Settings\InteractiveHelper.Settings.csproj" />
+    <ProjectReference Include="..\..\Services\TheTest\InteractiveHelper.TestConstructorService\InteractiveHelper.QuizConstructionServices.csproj" />
     <ProjectReference Include="..\..\Shared\Common\InteractiveHelper.Common.csproj" />
   </ItemGroup>
 
