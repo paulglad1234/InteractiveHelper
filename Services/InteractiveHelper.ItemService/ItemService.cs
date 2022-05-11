@@ -23,7 +23,8 @@ internal class ItemService : IItemService
         using var context = await dbContextFactory.CreateDbContextAsync();
 
         var items = context.Items
-            .Skip(Math.Max(offset, 0)).Take(Math.Min(limit, 1000));
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
 
         return await items.Select(item => mapper.Map<ItemModel>(item)).ToListAsync();
     }

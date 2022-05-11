@@ -25,13 +25,13 @@ public class ResultConstructionController : Controller
         this.resultService = resultService;
     }
 
-    [HttpGet("of:{quizId}")]
+    [HttpGet("of/{quizId}")]
     public async Task<IEnumerable<ResultResponse>> GetQuizResults([FromQuery] int quizId)
     {
         return mapper.Map<IEnumerable<ResultResponse>>(await resultService.GetQuizResults(quizId));
     }
 
-    [HttpPost("addTo:{quizId}")]
+    [HttpPost("addTo/{quizId}")]
     public async Task<ResultResponse> AddResultToQuiz([FromQuery] int quizId, [FromBody] AddResultRequest addResultRequest)
     {
         return mapper.Map<ResultResponse>(
@@ -39,14 +39,14 @@ public class ResultConstructionController : Controller
             mapper.Map<AddResultModel>(addResultRequest)));
     }
 
-    [HttpPut("{id}/addItem:{itemId}")]
+    [HttpPut("{id}/addItem/{itemId}")]
     public async Task<ResultResponse> AddItemToResult([FromQuery] int id, [FromQuery] int itemId)
     {
         return mapper.Map<ResultResponse>(
             await resultService.AddItemToResult(id, itemId));
     }
 
-    [HttpPut("{id}/removeItem:{itemId}")]
+    [HttpPut("{id}/removeItem/{itemId}")]
     public async Task<ResultResponse> RemoveItemFromResult([FromQuery] int id, [FromQuery] int itemId)
     {
         return mapper.Map<ResultResponse>(

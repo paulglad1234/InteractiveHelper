@@ -25,7 +25,7 @@ public class AnswerConstructionController : Controller
         this.answerService = answerService;
     }
 
-    [HttpGet("to:{questionId}")]
+    [HttpGet("to/{questionId}")]
     public async Task<IEnumerable<AnswerResponse>> GetQuestionAnswers([FromQuery] int questionId)
     {
         return mapper.Map<IEnumerable<AnswerResponse>>(await answerService.GetQuestionAnswers(questionId));

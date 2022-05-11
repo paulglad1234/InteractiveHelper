@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using InteractiveHelper.Common.Security;
 
 public abstract partial class ComponentTest
 {
@@ -83,5 +84,27 @@ public abstract partial class ComponentTest
     protected TestUser GetTestUser()
     {
         return AppApiTestUsers.ApiUsers.First();
+    }
+
+    protected static class Scopes
+    {
+        public static string Read => "offline_access " + AppScopes.Read;
+        public static string Write => "offline_access " + AppScopes.Write;
+        public static string ReadAndWrite => "offline_access " + AppScopes.Read + " " + AppScopes.Write;
+        public static string Empty => "offline_access";
+    }
+
+    public async Task<string> AuthenticateUser_ReadAndWriteScope()
+    {
+        var user = GetTestUser();
+        var tokenResponse = await AuthenticateTestUser(user.Username, user.Password, Scopes.ReadAndWrite);
+        return tokenResponse.AccessToken;
+    }
+
+    public async Task<string> AuthenticateUser_EmptyScope()
+    {
+        var user = GetTestUser();
+        var tokenResponse = await AuthenticateTestUser(user.Username, user.Password, Scopes.Empty);
+        return tokenResponse.AccessToken;
     }
 }
