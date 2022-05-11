@@ -1,16 +1,20 @@
 ﻿using AutoMapper;
-using InteractiveHelper.Api.Controllers.Items.Models;
+using InteractiveHelper.Api.Controllers.Catalog.Items.Models;
 using InteractiveHelper.Common.Security;
 using InteractiveHelper.ItemService;
 using InteractiveHelper.ItemService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InteractiveHelper.Api.Controllers.Items;
+namespace InteractiveHelper.Api.Controllers.Catalog.Items;
 
+/// <summary>
+/// Contains CRUD actions for items in catalog
+/// </summary>
 [Route("api/v{version:apiVersion}/items")]
 [ApiController]
 [ApiVersion("1.0")]
+[Area("Catalog")]
 public class ItemController : ControllerBase
 {
     private readonly IMapper mapper;
@@ -22,6 +26,12 @@ public class ItemController : ControllerBase
         this.itemService = itemService;
     }
 
+    /// <summary>
+    /// Returns the given amount of items from catalog
+    /// </summary>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <returns>Collection of items</returns>
     [HttpGet("")]
     public async Task<IEnumerable<ItemResponse>> GetItems([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
@@ -30,6 +40,11 @@ public class ItemController : ControllerBase
         return mapper.Map<IEnumerable<ItemResponse>>(items);
     }
 
+    /// <summary>
+    /// Returns the item with given id
+    /// </summary>
+    /// <param name="id">Item id</param>
+    /// <returns>Item</returns>
     [HttpGet("{id}")]
     public async Task<ItemResponse> GetItemById([FromRoute] int id)
     {
@@ -38,6 +53,11 @@ public class ItemController : ControllerBase
         return mapper.Map<ItemResponse>(item);
     }
 
+    /// <summary>
+    /// Creates new item with properties given in the request body
+    /// </summary>
+    /// <param name="request">Item properties</param>
+    /// <returns>Newly created item</returns>
     [HttpPost("")]
     [Authorize(AppScopes.Write)]
     public async Task<ItemResponse> AddItem([FromBody] AddItemRequest request)
@@ -48,6 +68,12 @@ public class ItemController : ControllerBase
         return mapper.Map<ItemResponse>(item);
     }
 
+    /// <summary>
+    /// Updates the item with given id with properties given in the request body
+    /// </summary>
+    /// <param name="id">Item id</param>
+    /// <param name="request">Item properties</param>
+    /// <returns>The updated item</returns>
     [HttpPut("{id}")]
     [Authorize(AppScopes.Write)]
     public async Task<ItemResponse> UpdateItem([FromRoute] int id, [FromBody] UpdateItemRequest request)
@@ -58,6 +84,11 @@ public class ItemController : ControllerBase
         return mapper.Map<ItemResponse>(item);
     }
 
+    /// <summary>
+    /// Deletes item with given id
+    /// </summary>
+    /// <param name="id">Item id</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteItem([FromRoute] int id)

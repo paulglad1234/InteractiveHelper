@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
-using InteractiveHelper.ItemService.Models;
+using InteractiveHelper.BrandService.Models;
 
-namespace InteractiveHelper.Api.Controllers.Items.Models;
+namespace InteractiveHelper.Api.Controllers.Catalog.Brands.Models;
 
-public class ItemResponse
+public class BrandsItemResponse
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public float Price { get; set; }
     public byte[] Image { get; set; }
-
-    public int BrandId { get; set; }
-    public int CategoryId { get; set; }
 }
 
 public class ItemResponseProfile : Profile
 {
     public ItemResponseProfile()
     {
-        CreateMap<ItemModel, ItemResponse>();
+        CreateMap<ItemModel, BrandsItemResponse>();
     }
 }

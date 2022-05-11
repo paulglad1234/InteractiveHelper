@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InteractiveHelper.BrandService.Models;
 
-namespace InteractiveHelper.Api.Controllers.Brands.Models
+namespace InteractiveHelper.Api.Controllers.Catalog.Brands.Models
 {
     public class BrandResponse
     {

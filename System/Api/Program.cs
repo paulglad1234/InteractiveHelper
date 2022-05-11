@@ -55,7 +55,7 @@ app.UseAppAuth();
 
 app.UseAppSwagger();
 
-app.MapControllers();
+app.UseEndpoints(c => c.MapControllers());
 
 app.UseAppDbContext();
 

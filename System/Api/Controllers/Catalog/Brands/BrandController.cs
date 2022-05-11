@@ -1,16 +1,20 @@
 ﻿using AutoMapper;
-using InteractiveHelper.Api.Controllers.Brands.Models;
+using InteractiveHelper.Api.Controllers.Catalog.Brands.Models;
 using InteractiveHelper.BrandService;
 using InteractiveHelper.BrandService.Models;
 using InteractiveHelper.Common.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InteractiveHelper.Api.Controllers.Brands;
+namespace InteractiveHelper.Api.Controllers.Catalog.Brands;
 
+/// <summary>
+/// Contains CRUD actions for brands in catalog
+/// </summary>
 [Route("api/v{version:apiVersion}/brands")]
 [ApiController]
 [ApiVersion("1.0")]
+[Area("Catalog")]
 public class BrandController : Controller
 {
     private readonly IMapper mapper;
@@ -22,6 +26,10 @@ public class BrandController : Controller
         this.brandService = brandService;
     }
 
+    /// <summary>
+    /// Returns all brands that exist in catalog
+    /// </summary>
+    /// <returns>Collection of brands</returns>
     [HttpGet("")]
     public async Task<IEnumerable<BrandResponse>> GetBrands()
     {
@@ -30,23 +38,41 @@ public class BrandController : Controller
         return mapper.Map<IEnumerable<BrandResponse>>(brands);
     }
 
+    /// <summary>
+    /// Returns the given amount of brand's items from catalog
+    /// </summary>
+    /// <param name="id">Brand id</param>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <returns>Collection of items</returns>
     [HttpGet("{id}/items")]
-    public async Task<IEnumerable<BrandsItemResponse>> GetBrandsItems([FromRoute] int id)
+    public async Task<IEnumerable<BrandsItemResponse>> GetBrandsItems([FromRoute] int id, 
+        [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        var items = await brandService.GetBrandsItems(id);
+        var items = await brandService.GetBrandsItems(id, offset, limit);
         return mapper.Map<IEnumerable<BrandsItemResponse>>(items);
     }
 
+    /// <summary>
+    /// Creates new brand with properties given in the request body
+    /// </summary>
+    /// <param name="request">Brand properties</param>
+    /// <returns>The newly created brand</returns>
     [HttpPost("")]
     [Authorize(AppScopes.Write)]
     public async Task<BrandResponse> AddBrand([FromBody] AddBrandRequest request)
     {
         var model = mapper.Map<AddBrandModel>(request);
         var brand = await brandService.AddBrand(model);
-
         return mapper.Map<BrandResponse>(brand);
     }
 
+    /// <summary>
+    /// Updates a brand with properties given in the request body
+    /// </summary>
+    /// <param name="id">Brand id</param>
+    /// <param name="request">Brand properties</param>
+    /// <returns>Updated brand</returns>
     [HttpPut("{id}")]
     [Authorize(AppScopes.Write)]
     public async Task<BrandResponse> UpdateBrand([FromRoute] int id, [FromBody] UpdateBrandRequest request)
@@ -57,6 +83,10 @@ public class BrandController : Controller
         return mapper.Map<BrandResponse>(brand);
     }
 
+    /// <summary>
+    /// Deletes a brand with given id
+    /// </summary>
+    /// <param name="id">Brand id</param>
     [HttpDelete("{id}")]
     [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteBrand([FromRoute] int id)

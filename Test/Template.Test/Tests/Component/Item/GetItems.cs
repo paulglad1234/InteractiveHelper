@@ -1,6 +1,6 @@
 ﻿namespace InteractiveHelper.Test.Tests.Component.Item;
 
-using InteractiveHelper.Api.Controllers.Items.Models;
+using InteractiveHelper.Api.Controllers.Catalog.Items.Models;
 using InteractiveHelper.Test.Common.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;

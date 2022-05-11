@@ -3,7 +3,7 @@ using FluentValidation;
 using InteractiveHelper.ItemService.Models;
 using System.Text;
 
-namespace InteractiveHelper.Api.Controllers.Items.Models;
+namespace InteractiveHelper.Api.Controllers.Catalog.Items.Models;
 
 public class AddItemRequest
 {

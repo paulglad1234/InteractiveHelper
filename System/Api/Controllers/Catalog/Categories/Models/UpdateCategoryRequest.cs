@@ -2,7 +2,7 @@
 using FluentValidation;
 using InteractiveHelper.CategoryService.Models;
 
-namespace InteractiveHelper.Api.Controllers.Categories.Models;
+namespace InteractiveHelper.Api.Controllers.Catalog.Categories.Models;
 
 public class UpdateCategoryRequest
 {

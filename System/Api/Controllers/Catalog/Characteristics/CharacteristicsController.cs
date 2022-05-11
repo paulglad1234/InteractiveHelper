@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
-using InteractiveHelper.Api.Controllers.Characteristics.Models;
+using InteractiveHelper.Api.Controllers.Catalog.Characteristics.Models;
 using InteractiveHelper.CharactetisricService;
 using InteractiveHelper.CharactetisricService.Models;
 using InteractiveHelper.Common.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InteractiveHelper.Api.Controllers.Characteristics;
+namespace InteractiveHelper.Api.Controllers.Catalog.Characteristics;
 
 [Route("api/v{version:apiVersion}/")]
 [ApiController]
+[Area("Catalog")]
 public class CharacteristicsController : ControllerBase
 {
     private readonly IMapper mapper;
@@ -21,6 +22,11 @@ public class CharacteristicsController : ControllerBase
         this.characteristicService = characteristicService;
     }
 
+    /// <summary>
+    /// Returns characteristics assigned to the category with given id
+    /// </summary>
+    /// <param name="id">Category id</param>
+    /// <returns>Collection of characteristics</returns>
     [HttpGet("categories/{id}/characteristics")]
     public async Task<IEnumerable<CharacteristicResponse>> GetCategoryCharacteristics([FromRoute] int id)
     {
@@ -28,6 +34,11 @@ public class CharacteristicsController : ControllerBase
             await characteristicService.GetCategoryCharacteristics(id));
     }
 
+    /// <summary>
+    /// Returns characteristic values of the item with given id
+    /// </summary>
+    /// <param name="id">Item id</param>
+    /// <returns>Collection of characteristic ids and values</returns>
     [HttpGet("items/{id}/characteristics")]
     public async Task<IEnumerable<ItemCharacteristicResponse>> GetItemCharacteristics([FromRoute] int id)
     {
@@ -35,6 +46,12 @@ public class CharacteristicsController : ControllerBase
             await characteristicService.GetItemCharacteristics(id));
     }
 
+    /// <summary>
+    /// Assign the given list of characteristics to the category with given id
+    /// </summary>
+    /// <param name="id">Category id</param>
+    /// <param name="characteristicModels">Collection of characteristic properties</param>
+    /// <returns></returns>
     [HttpPut("categories/{id}/characteristics")]
     [Authorize(AppScopes.Write)]
     public async Task<IActionResult> UpdateCategoryCharacterisrics([FromRoute] int id, 
@@ -46,6 +63,14 @@ public class CharacteristicsController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Assign the given list of characteristic values to the item with given id
+    /// </summary>
+    /// <param name="id">Item id</param>
+    /// <param name="itemCharacteristicModels">Collection of characteristic values</param>
+    /// <returns></returns>
+    /// <response code="200">If operation successful</response>
+    /// <response code="400">If the characteristic list does not corespond item's category characteristics</response>
     [HttpPut("items/{id}/characteristics")]
     [Authorize(AppScopes.Write)]
     public async Task<IActionResult> UpdateItemCharacteristics([FromRoute] int id, 

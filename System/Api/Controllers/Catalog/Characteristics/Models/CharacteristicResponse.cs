@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InteractiveHelper.CharactetisricService.Models;
 
-namespace InteractiveHelper.Api.Controllers.Characteristics.Models;
+namespace InteractiveHelper.Api.Controllers.Catalog.Characteristics.Models;
 
 public class CharacteristicResponse
 {

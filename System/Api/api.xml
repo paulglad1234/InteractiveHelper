@@ -161,15 +161,171 @@
             </summary>
             <param name="services">Service collection</param>
         </member>
-        <member name="P:InteractiveHelper.Api.Controllers.Items.Models.AddItemRequest.Image">
+        <member name="T:InteractiveHelper.Api.Controllers.Catalog.Brands.BrandController">
+            <summary>
+            Contains CRUD actions for brands in catalog
+            </summary>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Brands.BrandController.GetBrands">
+            <summary>
+            Returns all brands that exist in catalog
+            </summary>
+            <returns>Collection of brands</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Brands.BrandController.GetBrandsItems(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns the given amount of brand's items from catalog
+            </summary>
+            <param name="id">Brand id</param>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <returns>Collection of items</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Brands.BrandController.AddBrand(InteractiveHelper.Api.Controllers.Catalog.Brands.Models.AddBrandRequest)">
+            <summary>
+            Creates new brand with properties given in the request body
+            </summary>
+            <param name="request">Brand properties</param>
+            <returns>The newly created brand</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Brands.BrandController.UpdateBrand(System.Int32,InteractiveHelper.Api.Controllers.Catalog.Brands.Models.UpdateBrandRequest)">
+            <summary>
+            Updates a brand with properties given in the request body
+            </summary>
+            <param name="id">Brand id</param>
+            <param name="request">Brand properties</param>
+            <returns>Updated brand</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Brands.BrandController.DeleteBrand(System.Int32)">
+            <summary>
+            Deletes a brand with given id
+            </summary>
+            <param name="id">Brand id</param>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Characteristics.CharacteristicsController.GetCategoryCharacteristics(System.Int32)">
+            <summary>
+            Returns characteristics assigned to the category with given id
+            </summary>
+            <param name="id">Category id</param>
+            <returns>Collection of characteristics</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Characteristics.CharacteristicsController.GetItemCharacteristics(System.Int32)">
+            <summary>
+            Returns characteristic values of the item with given id
+            </summary>
+            <param name="id">Item id</param>
+            <returns>Collection of characteristic ids and values</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Characteristics.CharacteristicsController.UpdateCategoryCharacterisrics(System.Int32,System.Collections.Generic.IEnumerable{InteractiveHelper.Api.Controllers.Catalog.Characteristics.Models.UpdateCharacteristicRequest})">
+            <summary>
+            Assign the given list of characteristics to the category with given id
+            </summary>
+            <param name="id">Category id</param>
+            <param name="characteristicModels">Collection of characteristic properties</param>
+            <returns></returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Characteristics.CharacteristicsController.UpdateItemCharacteristics(System.Int32,System.Collections.Generic.IEnumerable{InteractiveHelper.Api.Controllers.Catalog.Characteristics.Models.UpdateItemCharacteristicRequest})">
+            <summary>
+            Assign the given list of characteristic values to the item with given id
+            </summary>
+            <param name="id">Item id</param>
+            <param name="itemCharacteristicModels">Collection of characteristic values</param>
+            <returns></returns>
+            <response code="200">If operation successful</response>
+            <response code="400">If the characteristic list does not corespond item's category characteristics</response>
+        </member>
+        <member name="T:InteractiveHelper.Api.Controllers.Catalog.Items.ItemController">
+            <summary>
+            Contains CRUD actions for items in catalog
+            </summary>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Items.ItemController.GetItems(System.Int32,System.Int32)">
+            <summary>
+            Returns the given amount of items from catalog
+            </summary>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <returns>Collection of items</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Items.ItemController.GetItemById(System.Int32)">
+            <summary>
+            Returns the item with given id
+            </summary>
+            <param name="id">Item id</param>
+            <returns>Item</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Items.ItemController.AddItem(InteractiveHelper.Api.Controllers.Catalog.Items.Models.AddItemRequest)">
+            <summary>
+            Creates new item with properties given in the request body
+            </summary>
+            <param name="request">Item properties</param>
+            <returns>Newly created item</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Items.ItemController.UpdateItem(System.Int32,InteractiveHelper.Api.Controllers.Catalog.Items.Models.UpdateItemRequest)">
+            <summary>
+            Updates the item with given id with properties given in the request body
+            </summary>
+            <param name="id">Item id</param>
+            <param name="request">Item properties</param>
+            <returns>The updated item</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Catalog.Items.ItemController.DeleteItem(System.Int32)">
+            <summary>
+            Deletes item with given id
+            </summary>
+            <param name="id">Item id</param>
+            <returns></returns>
+        </member>
+        <member name="P:InteractiveHelper.Api.Controllers.Catalog.Items.Models.AddItemRequest.Image">
             <summary>
             Image byte code
             </summary>
         </member>
-        <member name="P:InteractiveHelper.Api.Controllers.Items.Models.UpdateItemRequest.Image">
+        <member name="P:InteractiveHelper.Api.Controllers.Catalog.Items.Models.UpdateItemRequest.Image">
             <summary>
             Image byte code
             </summary>
+        </member>
+        <member name="T:InteractiveHelper.Api.Controllers.Categories.CategoryController">
+            <summary>
+            Contains CRUD actions for categories in catalog
+            </summary>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Categories.CategoryController.GetCategories">
+            <summary>
+            Returns all categories that exist in catalog
+            </summary>
+            <returns>Collection of categories</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Categories.CategoryController.GetCategoryItems(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns the given amount of category's items from catalog
+            </summary>
+            <param name="id">Category id</param>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <returns>Collection of items</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Categories.CategoryController.AddCategory(InteractiveHelper.Api.Controllers.Catalog.Categories.Models.AddCategoryRequest)">
+            <summary>
+            Creates new category with properties given in the request body
+            </summary>
+            <param name="request">Category properties</param>
+            <returns>The newly created category</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Categories.CategoryController.UpdateCategory(System.Int32,InteractiveHelper.Api.Controllers.Catalog.Categories.Models.UpdateCategoryRequest)">
+            <summary>
+            Updates a category with properties given in the request body
+            </summary>
+            <param name="id">Category id</param>
+            <param name="request">Category properties</param>
+            <returns>The updated category</returns>
+        </member>
+        <member name="M:InteractiveHelper.Api.Controllers.Categories.CategoryController.DeleteCategory(System.Int32)">
+            <summary>
+            Deletes a category with given id
+            </summary>
+            <param name="id">Category id</param>
         </member>
         <member name="T:InteractiveHelper.Api.Middleware.ExceptionsMiddleware">
             <summary>
