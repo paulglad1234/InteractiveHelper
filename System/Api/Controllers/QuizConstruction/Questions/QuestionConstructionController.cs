@@ -11,9 +11,7 @@ namespace InteractiveHelper.Api.Controllers.QuizConstruction.Questions;
 [Route("api/v{version:apiVersion}/quizconstruction/questions")]
 [ApiController]
 [ApiVersion("1.0")]
-// TODO: Role-based authorization
-[Authorize(AppScopes.Read)]
-[Authorize(AppScopes.Write)]
+[Authorize(AppScopes.AdminQuiz)]
 public class QuestionConstructionController : Controller
 {
     private readonly IMapper mapper;

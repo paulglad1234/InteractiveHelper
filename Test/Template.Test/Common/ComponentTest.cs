@@ -88,16 +88,17 @@ public abstract partial class ComponentTest
 
     protected static class Scopes
     {
-        public static string Read => "offline_access " + AppScopes.Read;
-        public static string Write => "offline_access " + AppScopes.Write;
-        public static string ReadAndWrite => "offline_access " + AppScopes.Read + " " + AppScopes.Write;
+        public static string AdminCatalog => "offline_access " + AppScopes.AdminCatalog;
+        public static string AdminQuiz => "offline_access " + AppScopes.AdminQuiz;
+        public static string SupportOrders => "offline_access " + AppScopes.SupportOrders;
+        public static string AuthenticatedUser => "offline_access " + AppScopes.AuthenticatedUser;
         public static string Empty => "offline_access";
     }
 
-    public async Task<string> AuthenticateUser_ReadAndWriteScope()
+    public async Task<string> AuthenticateUser_WithScope(string scope)
     {
         var user = GetTestUser();
-        var tokenResponse = await AuthenticateTestUser(user.Username, user.Password, Scopes.ReadAndWrite);
+        var tokenResponse = await AuthenticateTestUser(user.Username, user.Password, scope);
         return tokenResponse.AccessToken;
     }
 

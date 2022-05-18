@@ -1,6 +1,7 @@
 ﻿namespace InteractiveHelper.Api.Configuration;
 
 using IdentityServer4.AccessTokenValidation;
+using InteractiveHelper.Common.Security;
 using InteractiveHelper.Settings;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Any;
@@ -66,7 +67,10 @@ public static class SwaggerConfiguration
                         TokenUrl = new Uri($"{settings.IdentityServer.Url}/connect/token"),
                         Scopes = new Dictionary<string, string>
                         {
-
+                            { AppScopes.AdminCatalog, "AdminCatalog" },
+                            { AppScopes.AdminQuiz, "AdminQuiz" },
+                            { AppScopes.SupportOrders, "SupportOrders" },
+                            { AppScopes.AuthenticatedUser, "AuthenticatedUser" }
                         }
                     },
                     Password = new OpenApiOAuthFlow
@@ -74,7 +78,10 @@ public static class SwaggerConfiguration
                         TokenUrl = new Uri($"{settings.IdentityServer.Url}/connect/token"),
                         Scopes = new Dictionary<string, string>
                         {
-
+                            { AppScopes.AdminCatalog, "AdminCatalog" },
+                            { AppScopes.AdminQuiz, "AdminQuiz" },
+                            { AppScopes.SupportOrders, "SupportOrders" },
+                            { AppScopes.AuthenticatedUser, "AuthenticatedUser" }
                         }
                     }
                 }

@@ -10,7 +10,7 @@ public static class AppClients
         {
             new Client
             {
-                ClientId = "service",
+                ClientId = "swagger",
                 ClientSecrets =
                 {
                     new Secret("secret".Sha256())
@@ -21,17 +21,19 @@ public static class AppClients
                 AccessTokenLifetime = 3600, // 1 hour
 
                 AllowedScopes = {
-                    AppScopes.Read,
-                    AppScopes.Write
+                    AppScopes.AdminCatalog,
+                    AppScopes.AdminQuiz,
+                    AppScopes.SupportOrders,
+                    AppScopes.AuthenticatedUser
                 }
-            }
-            ,
+            },
+
             new Client
             {
-                ClientId = "admin_frontend",
+                ClientId = "catalog_admin_frontend",
                 ClientSecrets =
                 {
-                    new Secret("youwillneverguess".Sha256())
+                    new Secret("secret".Sha256())
                 },
 
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
@@ -47,10 +49,60 @@ public static class AppClients
                 SlidingRefreshTokenLifetime = 1296000, // 15 days
 
                 AllowedScopes = {
-                    AppScopes.Read,
-                    AppScopes.Write
+                    AppScopes.AdminCatalog
                 }
             },
+
+            new Client
+            {
+                ClientId = "quiz_admin_frontend",
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                AllowOfflineAccess = true,
+                AccessTokenType = AccessTokenType.Jwt,
+
+                AccessTokenLifetime = 3600, // 1 hour
+
+                RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                RefreshTokenExpiration = TokenExpiration.Sliding,
+                AbsoluteRefreshTokenLifetime = 2592000, // 30 days
+                SlidingRefreshTokenLifetime = 1296000, // 15 days
+
+                AllowedScopes = {
+                    AppScopes.AdminQuiz
+                }
+            },
+
+            new Client
+            {
+                ClientId = "support_orders_frontend",
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                AllowOfflineAccess = true,
+                AccessTokenType = AccessTokenType.Jwt,
+
+                AccessTokenLifetime = 3600, // 1 hour
+
+                RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                RefreshTokenExpiration = TokenExpiration.Sliding,
+                AbsoluteRefreshTokenLifetime = 2592000, // 30 days
+                SlidingRefreshTokenLifetime = 1296000, // 15 days
+
+                AllowedScopes = {
+                    AppScopes.SupportOrders
+                }
+            },
+
             new Client
             {
                 ClientId = "frontend",
@@ -72,7 +124,7 @@ public static class AppClients
                 SlidingRefreshTokenLifetime = 1296000, // 15 days
 
                 AllowedScopes = {
-                    AppScopes.Read
+                    AppScopes.AuthenticatedUser
                 }
             }
         };

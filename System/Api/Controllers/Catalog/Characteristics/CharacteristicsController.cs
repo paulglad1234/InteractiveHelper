@@ -53,7 +53,7 @@ public class CharacteristicsController : ControllerBase
     /// <param name="characteristicModels">Collection of characteristic properties</param>
     /// <returns></returns>
     [HttpPut("categories/{id}/characteristics")]
-    [Authorize(AppScopes.Write)]
+    [Authorize(AppScopes.AdminCatalog)]
     public async Task<IActionResult> UpdateCategoryCharacterisrics([FromRoute] int id, 
         [FromBody] IEnumerable<UpdateCharacteristicRequest> characteristicModels)
     {
@@ -72,7 +72,7 @@ public class CharacteristicsController : ControllerBase
     /// <response code="200">If operation successful</response>
     /// <response code="400">If the characteristic list does not corespond item's category characteristics</response>
     [HttpPut("items/{id}/characteristics")]
-    [Authorize(AppScopes.Write)]
+    [Authorize(AppScopes.AdminCatalog)]
     public async Task<IActionResult> UpdateItemCharacteristics([FromRoute] int id, 
         [FromBody] IEnumerable<UpdateItemCharacteristicRequest> itemCharacteristicModels)
     {

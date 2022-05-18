@@ -5,7 +5,7 @@ using Duende.IdentityServer.Test;
 public static class AppApiTestUsers
 {
     public static List<TestUser> ApiUsers =>
-        new List<TestUser>
+        new()
         {
             new TestUser
             {

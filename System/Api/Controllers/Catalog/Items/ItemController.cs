@@ -15,6 +15,7 @@ namespace InteractiveHelper.Api.Controllers.Catalog.Items;
 [ApiController]
 [ApiVersion("1.0")]
 [Area("Catalog")]
+[Authorize(AppScopes.AdminCatalog)]
 public class ItemController : ControllerBase
 {
     private readonly IMapper mapper;
@@ -33,6 +34,7 @@ public class ItemController : ControllerBase
     /// <param name="limit"></param>
     /// <returns>Collection of items</returns>
     [HttpGet("")]
+    [AllowAnonymous]
     public async Task<IEnumerable<ItemResponse>> GetItems([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var items = await itemService.GetItems(offset, limit);
@@ -46,6 +48,7 @@ public class ItemController : ControllerBase
     /// <param name="id">Item id</param>
     /// <returns>Item</returns>
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ItemResponse> GetItemById([FromRoute] int id)
     {
         var item = await itemService.GetItem(id);
@@ -59,7 +62,6 @@ public class ItemController : ControllerBase
     /// <param name="request">Item properties</param>
     /// <returns>Newly created item</returns>
     [HttpPost("")]
-    [Authorize(AppScopes.Write)]
     public async Task<ItemResponse> AddItem([FromBody] AddItemRequest request)
     {
         var model = mapper.Map<AddItemModel>(request);
@@ -75,7 +77,6 @@ public class ItemController : ControllerBase
     /// <param name="request">Item properties</param>
     /// <returns>The updated item</returns>
     [HttpPut("{id}")]
-    [Authorize(AppScopes.Write)]
     public async Task<ItemResponse> UpdateItem([FromRoute] int id, [FromBody] UpdateItemRequest request)
     {
         var model = mapper.Map<UpdateItemModel>(request);
@@ -90,7 +91,6 @@ public class ItemController : ControllerBase
     /// <param name="id">Item id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteItem([FromRoute] int id)
     {
         await itemService.DeleteItem(id);

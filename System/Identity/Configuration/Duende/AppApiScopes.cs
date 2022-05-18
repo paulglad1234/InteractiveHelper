@@ -8,7 +8,9 @@ public static class AppApiScopes
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new ApiScope(AppScopes.Read, "Read content"),
-            new ApiScope(AppScopes.Write, "Create, Update and Delete content")
+            new ApiScope(AppScopes.AdminCatalog, "Apply changes to the catalog"),
+            new ApiScope(AppScopes.AdminQuiz, "Construct quizes"),
+            new ApiScope(AppScopes.SupportOrders, "Update order details and cancel orders"),
+            new ApiScope(AppScopes.AuthenticatedUser, "Make orders"),
         };
 }

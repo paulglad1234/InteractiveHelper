@@ -15,6 +15,7 @@ namespace InteractiveHelper.Api.Controllers.Categories;
 [ApiController]
 [ApiVersion("1.0")]
 [Area("Catalog")]
+[Authorize(AppScopes.AdminCatalog)]
 public class CategoryController : Controller
 {
     private readonly IMapper mapper;
@@ -31,6 +32,7 @@ public class CategoryController : Controller
     /// </summary>
     /// <returns>Collection of categories</returns>
     [HttpGet("")]
+    [AllowAnonymous]
     public async Task<IEnumerable<CategoryResponse>> GetCategories()
     {
         var categories = await categoryService.GetCategories();
@@ -46,6 +48,7 @@ public class CategoryController : Controller
     /// <param name="limit"></param>
     /// <returns>Collection of items</returns>
     [HttpGet("{id}/items")]
+    [AllowAnonymous]
     public async Task<IEnumerable<CategoryItemResponse>> GetCategoryItems([FromRoute] int id,
         [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
@@ -59,7 +62,6 @@ public class CategoryController : Controller
     /// <param name="request">Category properties</param>
     /// <returns>The newly created category</returns>
     [HttpPost("")]
-    [Authorize(AppScopes.Write)]
     public async Task<CategoryResponse> AddCategory([FromBody] AddCategoryRequest request)
     {
         var model = mapper.Map<AddCategoryModel>(request);
@@ -75,7 +77,6 @@ public class CategoryController : Controller
     /// <param name="request">Category properties</param>
     /// <returns>The updated category</returns>
     [HttpPut("{id}")]
-    [Authorize(AppScopes.Write)]
     public async Task<CategoryResponse> UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryRequest request)
     {
         var model = mapper.Map<UpdateCategoryModel>(request);
@@ -89,7 +90,6 @@ public class CategoryController : Controller
     /// </summary>
     /// <param name="id">Category id</param>
     [HttpDelete("{id}")]
-    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteCategory([FromRoute] int id)
     {
         await categoryService.DeleteCategory(id);

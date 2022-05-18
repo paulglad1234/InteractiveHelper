@@ -59,8 +59,10 @@ public static class AuthConfiguration
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(AppScopes.Read, policy => policy.RequireClaim("scope", AppScopes.Read));
-            options.AddPolicy(AppScopes.Write, policy => policy.RequireClaim("scope", AppScopes.Write));
+            options.AddPolicy(AppScopes.AdminCatalog, policy => policy.RequireClaim("scope", AppScopes.AdminCatalog));
+            options.AddPolicy(AppScopes.AdminQuiz, policy => policy.RequireClaim("scope", AppScopes.AdminQuiz));
+            options.AddPolicy(AppScopes.SupportOrders, policy => policy.RequireClaim("scope", AppScopes.SupportOrders));
+            options.AddPolicy(AppScopes.AuthenticatedUser, policy => policy.RequireClaim("scope", AppScopes.AuthenticatedUser));
         });
 
         return services;

@@ -15,6 +15,7 @@ namespace InteractiveHelper.Api.Controllers.Catalog.Brands;
 [ApiController]
 [ApiVersion("1.0")]
 [Area("Catalog")]
+[Authorize(AppScopes.AdminCatalog)]
 public class BrandController : Controller
 {
     private readonly IMapper mapper;
@@ -31,6 +32,7 @@ public class BrandController : Controller
     /// </summary>
     /// <returns>Collection of brands</returns>
     [HttpGet("")]
+    [AllowAnonymous]
     public async Task<IEnumerable<BrandResponse>> GetBrands()
     {
         var brands = await brandService.GetBrands();
@@ -46,6 +48,7 @@ public class BrandController : Controller
     /// <param name="limit"></param>
     /// <returns>Collection of items</returns>
     [HttpGet("{id}/items")]
+    [AllowAnonymous]
     public async Task<IEnumerable<BrandsItemResponse>> GetBrandsItems([FromRoute] int id, 
         [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
@@ -59,7 +62,6 @@ public class BrandController : Controller
     /// <param name="request">Brand properties</param>
     /// <returns>The newly created brand</returns>
     [HttpPost("")]
-    [Authorize(AppScopes.Write)]
     public async Task<BrandResponse> AddBrand([FromBody] AddBrandRequest request)
     {
         var model = mapper.Map<AddBrandModel>(request);
@@ -74,7 +76,6 @@ public class BrandController : Controller
     /// <param name="request">Brand properties</param>
     /// <returns>Updated brand</returns>
     [HttpPut("{id}")]
-    [Authorize(AppScopes.Write)]
     public async Task<BrandResponse> UpdateBrand([FromRoute] int id, [FromBody] UpdateBrandRequest request)
     {
         var model = mapper.Map<UpdateBrandModel>(request);
@@ -88,7 +89,6 @@ public class BrandController : Controller
     /// </summary>
     /// <param name="id">Brand id</param>
     [HttpDelete("{id}")]
-    [Authorize(AppScopes.Write)]
     public async Task<IActionResult> DeleteBrand([FromRoute] int id)
     {
         await brandService.DeleteBrand(id);
