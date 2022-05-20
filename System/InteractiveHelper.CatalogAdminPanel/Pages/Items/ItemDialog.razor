@@ -1,0 +1,102 @@
+@inherits MudComponentBase
+
+@inject IItemService itemService
+
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="Name" @bind-Value="model.Name"
+                                  For="@(() => model.Name)"
+                                  Required="true"
+                                  RequiredError="Name is required!"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect @ref="selectBrand" T="int" Label="Brand" @bind-Value="model.BrandId" For="@(() => model.BrandId)">
+                        <MudSelectItem T="int" Value="0">&nbsp;</MudSelectItem>
+                        @foreach (var brand in _brands)
+                        {
+                            <MudSelectItem T="int" Value="@brand.Id">@brand.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect @ref="selectCategory" T="int" Label="Category" @bind-Value="model.CategoryId" For="@(() => model.CategoryId)">
+                        <MudSelectItem T="int" Value="0">&nbsp;</MudSelectItem>
+                        @foreach (var category in _categories)
+                        {
+                            <MudSelectItem T="int" Value="@category.Id">@category.Title</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" >
+                    <MudTextField Label="Description"
+                                  Lines="5"
+                                  For="@(() => model.Description)"
+                                  @bind-Value="model.Description"></MudTextField>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+
+    MudForm form = default!;
+    MudSelect<int> selectBrand = default!;
+    MudSelect<int> selectCategory = default!;
+
+    ItemInModelValidator modelValidator = new ItemInModelValidator();
+
+    bool isNew = false;
+
+    [Parameter]
+    public int? BookId { get; set; } = default;
+
+    [Parameter]
+    public ItemInModel model { get; set; } = new() { BrandId = 0 };
+
+    private List<BrandModel> _brands { get; set; } = new List<BrandModel>();
+    private List<CategoryModel> _categories { get; set; } = new List<CategoryModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _brands.AddRange(await itemService.GetBrandsList());
+        _categories.AddRange(await itemService.GetCategoriesList());
+
+        isNew = BookId == null;
+        if (!isNew)
+        {
+            var item = await itemService.GetItem(BookId ?? 0);
+
+            model.Id = item.Id;
+            model.BrandId = item.BrandId;
+            model.CategoryId = item.CategoryId;
+            model.Name = item.Name;
+            model.Description = item.Description;
+        }
+
+        await selectBrand.SelectOption(model.BrandId);
+        form.ResetValidation();
+    }
+
+    async Task Submit()
+    {
+        await form.Validate();
+        if (form.IsValid)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

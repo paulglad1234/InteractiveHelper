@@ -45,6 +45,13 @@ services:
       - interactivehelper
     env_file:
       - env.identity
+
+  catalogadminpanel:
+    ports:
+      - "20002:80"
+    networks:
+      - interactivehelper
+
 volumes:
   sqlserver-data:
   rabbitmq-data:

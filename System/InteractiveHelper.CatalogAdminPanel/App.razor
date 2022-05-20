@@ -1,0 +1,29 @@
+﻿@using InteractiveHelper.CatalogAdminPanel.Pages.Auth
+
+<CascadingAuthenticationState>
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(SimpleLayout)">
+            <Authorizing>
+                <text>Please, wait...</text>
+            </Authorizing>
+            <NotAuthorized>
+                    @if (context.User.Identity?.IsAuthenticated is true)
+                    {
+                        <MudText>Unauthorized</MudText>
+                    }
+                    else
+                    {
+                        <LoginPage />
+                    }
+                </NotAuthorized>
+        </AuthorizeRouteView>
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(SimpleLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+</CascadingAuthenticationState>

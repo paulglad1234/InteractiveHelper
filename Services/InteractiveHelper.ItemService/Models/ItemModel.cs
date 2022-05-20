@@ -12,13 +12,17 @@ public class ItemModel
     public byte[] Image { get; set; }
 
     public int BrandId { get; set; }
+    public string Brand { get; set; }
     public int CategoryId { get; set; }
+    public string Category { get; set; }
 }
 
 public class ItemModelProfile : Profile
 {
     public ItemModelProfile()
     {
-        CreateMap<Item, ItemModel>();
+        CreateMap<Item, ItemModel>()
+            .ForMember(res => res.Brand, opt => opt.MapFrom(src => src.Brand.Name))
+            .ForMember(res => res.Category, opt => opt.MapFrom(src => src.Category.Title));
     }
 }

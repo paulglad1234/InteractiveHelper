@@ -13,7 +13,7 @@ public class AddItemRequest
     /// <summary>
     /// Image byte code
     /// </summary>
-    public string Image { get; set; }
+    public byte[] Image { get; set; }
 
     public int BrandId { get; set; }
     public int CategoryId { get; set; }
@@ -38,8 +38,7 @@ public class AddItemRequest
     {
         public AddItemRequestProfile()
         {
-            CreateMap<AddItemRequest, AddItemModel>()
-                .ForMember(m => m.Image, a => a.MapFrom(r => Encoding.ASCII.GetBytes(r.Image)));
+            CreateMap<AddItemRequest, AddItemModel>();
         }
     }
 }

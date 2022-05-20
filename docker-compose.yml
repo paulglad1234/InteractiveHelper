@@ -30,3 +30,13 @@ services:
       - sqlserver
       - rabbitmq 
       - redis
+
+  catalogadminpanel:
+    image: ${DOCKER_REGISTRY-}catalogadminpanel
+    build:
+      context: .
+      dockerfile: System/InteractiveHelper.CatalogAdminPanel/Dockerfile
+    depends_on:
+      - sqlserver
+      - rabbitmq 
+      - redis
