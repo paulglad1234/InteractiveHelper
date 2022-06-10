@@ -17,5 +17,5 @@ public class Item : BaseEntity
 
     public virtual ICollection<Characteristic> Characteristics { get; set; }
     public virtual ICollection<ItemCharacteristic> ItemCharacteristics { get; set; }
-    public virtual ICollection<Result> Results { get; set; }
+    public virtual ICollection<ResultNode> Results { get; set; }
 }

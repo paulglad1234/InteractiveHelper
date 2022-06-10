@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InteractiveHelper.QuizConstructionServices.Models;
+using InteractiveHelper.QuizConstructionServices.Questions.Models;
 
 namespace InteractiveHelper.Api.Controllers.QuizConstruction.Questions.Models;
 
@@ -14,6 +14,6 @@ public class QuestionResponseProfile : Profile
 {
     public QuestionResponseProfile()
     {
-        CreateMap<QuestionModel, QuestionResponse>();
+        CreateMap<OutputQuestionModel, QuestionResponse>();
     }
 }

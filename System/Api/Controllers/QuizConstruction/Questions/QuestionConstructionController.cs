@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Api.Controllers.QuizConstruction.Questions.Models;
 using InteractiveHelper.Common.Security;
-using InteractiveHelper.QuizConstructionServices;
-using InteractiveHelper.QuizConstructionServices.Models;
+using InteractiveHelper.QuizConstructionServices.Questions;
+using InteractiveHelper.QuizConstructionServices.Questions.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,13 +35,13 @@ public class QuestionConstructionController : Controller
     {
         return mapper.Map<QuestionResponse>(
             await questionService.AddQuestionToQuiz(quizId,
-            mapper.Map<AddQuestionModel>(addQuestionRequest)));
+            mapper.Map<InputQuestionModel>(addQuestionRequest)));
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateQuestion([FromQuery] int id, [FromBody] UpdateQuestionRequest updateQuestionRequest)
     {
-        await questionService.UpdateQuestion(id, mapper.Map<UpdateQuestionModel>(updateQuestionRequest));
+        await questionService.UpdateQuestion(id, mapper.Map<InputQuestionModel>(updateQuestionRequest));
         return Ok();
     }
 

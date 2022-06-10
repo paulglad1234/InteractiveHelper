@@ -1,4 +1,6 @@
-﻿using InteractiveHelper.QuizConstructionServices.Results;
+﻿using InteractiveHelper.QuizConstructionServices.Answers;
+using InteractiveHelper.QuizConstructionServices.Questions;
+using InteractiveHelper.QuizConstructionServices.Quizes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InteractiveHelper.QuizConstructionServices;
@@ -10,8 +12,6 @@ public static class Bootstrapper
         services.AddSingleton<IQuizConstructionService, QuizConstructionService>();
         services.AddSingleton<IQuestionConstructionService, QuestionConstructionService>();
         services.AddSingleton<IAnswerConstructionService, AnswerConstructionService>();
-
-        services.AddSingleton<IResultGenerator, ResultGenerator>();
         services.AddSingleton<IResultConstructionService, ResultConstructionService>();
 
         return services;

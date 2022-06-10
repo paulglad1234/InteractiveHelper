@@ -1,0 +1,26 @@
+﻿@page "/result"
+
+@layout MainLayout
+
+<MudText Typo="Typo.h4" Class="ma-8">Результат</MudText>
+<MudSpacer />
+<MudText Typo="Typo.h5" Class="ma-8">Вашим потребностям удовлетворяют следующие товары:</MudText>
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="6">
+        <MudImage Fluid="true" Src="asus.png" Alt="Item" Elevation="25" Class="rounded-lg ma-8"/>
+    </MudItem>
+    <MudItem xs="6">
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6" Class="ma-8">15.6" Ноутбук ASUS M515DA-BQ1256</MudText>
+            </MudItem>
+            <MudItem xs="5">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-8">Перейти на страницу товара</MudButton>
+            </MudItem>
+            <MudItem xs="5">
+                <MudButton StartIcon="@Icons.Material.Filled.AddShoppingCart" Variant="Variant.Filled" Color="Color.Primary" Class="ma-8">Добавить в корзину</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>

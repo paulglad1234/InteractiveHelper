@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Common.Exceptions;
-using InteractiveHelper.QuizConstructionServices.Models;
 using InteractiveHelper.Db.Context;
 using InteractiveHelper.Db.Entities.Quiz;
 using Microsoft.EntityFrameworkCore;
+using InteractiveHelper.QuizConstructionServices.Answers.Models;
 
-namespace InteractiveHelper.QuizConstructionServices;
+namespace InteractiveHelper.QuizConstructionServices.Answers;
 
 public class AnswerConstructionService : IAnswerConstructionService
 {
@@ -18,26 +18,27 @@ public class AnswerConstructionService : IAnswerConstructionService
         this.mapper = mapper;
     }
 
-    public async Task<AnswerModel> AddNewAnswerToQuestion(int questionId, AddAnswerModel model)
+    public async Task<OutputAnswerModel> AddNewAnswerToQuestion(int questionId, InputAnswerModel model)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
-        var answer = mapper.Map<Answer>(model);
         var question = await context.Questions.FindAsync(questionId);
         CommonException.ThrowIfNull(question, $"Question with id {questionId} not found", 404);
+
+        var answer = mapper.Map<Answer>(model);
         answer.Question = question;
         await context.Answers.AddAsync(answer);
         await context.SaveChangesAsync();
 
-        return mapper.Map<AnswerModel>(answer);
+        return mapper.Map<OutputAnswerModel>(answer);
     }
 
-    public async Task<IEnumerable<AnswerModel>> GetQuestionAnswers(int questionId)
+    public async Task<IEnumerable<OutputAnswerModel>> GetQuestionAnswers(int questionId)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
         var question = await context.Questions.FindAsync(questionId);
         CommonException.ThrowIfNull(question, $"Question with id {questionId} not found", 404);
 
-        return mapper.Map<IEnumerable<AnswerModel>>(question.Answers.ToList());
+        return mapper.Map<IEnumerable<OutputAnswerModel>>(question.Answers.ToList());
     }
 
     public async Task RemoveAnswer(int answerId)
@@ -45,12 +46,13 @@ public class AnswerConstructionService : IAnswerConstructionService
         using var context = await dbContextFactory.CreateDbContextAsync();
         var answer = await context.Answers.FindAsync(answerId);
         CommonException.ThrowIfNull(answer, $"Answer with id {answerId} not found", 404);
+
         context.Answers.Remove(answer);
 
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAnswer(int answerId, UpdateAnswerModel model)
+    public async Task UpdateAnswer(int answerId, InputAnswerModel model)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
         var answer = await context.Answers.FindAsync(answerId);

@@ -1,16 +1,13 @@
-﻿using InteractiveHelper.QuizConstructionServices.Models;
+﻿using InteractiveHelper.CatalogServices.Items.Models;
+using InteractiveHelper.QuizConstructionServices.Results.Models;
 
 namespace InteractiveHelper.QuizConstructionServices;
 
 public interface IResultConstructionService
 {
-    Task<IEnumerable<ResultModel>> GetQuizResults(int quizId);
-    Task<QuizModel> GenerateQuizResults(int quizId);
-    Task UpdateResult(int resultId, UpdateResultModel model);
-    Task RemoveResult(int resultId);
+    Task<OutputNodeModel> RegrowResultTreeForQuiz(int quizId);
+    Task<IEnumerable<ItemModel>> GetLeafItems(int leafId);
 
-    Task<ResultModel> AddItemToResult(int itemId, int resultId);
-    Task<ResultModel> RemoveItemFromResult(int itemId, int resultId);
-
-    Task<ResultModel> AddResultToQuiz(int quizId, AddResultModel model);
+    Task<OutputNodeModel> AddItemToLeaf(int itemId, int leafId);
+    Task<OutputNodeModel> RemoveItemFromLeaf(int itemId, int leafId);
 }

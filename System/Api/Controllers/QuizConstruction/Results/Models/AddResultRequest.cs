@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.QuizConstructionServices.Models;
 
 namespace InteractiveHelper.Api.Controllers.QuizConstruction.Results.Models;
 
@@ -22,6 +21,6 @@ public class AddResultRequestProfile : Profile
 {
     public AddResultRequestProfile()
     {
-        CreateMap<AddResultRequest, AddResultModel>();
+        //CreateMap<AddResultRequest, InputResultModel>();
     }
 }

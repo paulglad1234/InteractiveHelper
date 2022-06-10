@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.CharactetisricService.Models;
+using InteractiveHelper.CatalogServices.Characteristics.Models;
 
 namespace InteractiveHelper.Api.Controllers.Catalog.Characteristics.Models;
 
@@ -10,13 +10,12 @@ public class UpdateItemCharacteristicRequest
     public string Value { get; set; }
 }
 
-public class UpdateItemCharacteristicRequestValidator : AbstractValidator<UpdateCharacteristicRequest>
+public class UpdateItemCharacteristicRequestValidator : AbstractValidator<UpdateItemCharacteristicRequest>
 {
     public UpdateItemCharacteristicRequestValidator()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is required.")
-            .MaximumLength(30).WithMessage("Name is too long.");
+        RuleFor(x => x.Value)
+            .NotEmpty().WithMessage("Value is required.");
     }
 }
 

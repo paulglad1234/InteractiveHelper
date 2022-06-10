@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InteractiveHelper.CategoryService.Models;
+using InteractiveHelper.CatalogServices.Categories.Models;
 
 namespace InteractiveHelper.Api.Controllers.Catalog.Categories.Models;
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.BrandService.Models;
+using InteractiveHelper.CatalogServices.Brands.Models;
 
 namespace InteractiveHelper.Api.Controllers.Catalog.Brands.Models;
 

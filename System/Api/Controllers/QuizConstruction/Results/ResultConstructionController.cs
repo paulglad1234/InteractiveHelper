@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using InteractiveHelper.Api.Controllers.QuizConstruction.Results.Models;
+using InteractiveHelper.CatalogServices.Items.Models;
 using InteractiveHelper.Common.Security;
 using InteractiveHelper.QuizConstructionServices;
-using InteractiveHelper.QuizConstructionServices.Models;
+using InteractiveHelper.QuizConstructionServices.Results.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,45 +23,27 @@ public class ResultConstructionController : Controller
         this.resultService = resultService;
     }
 
-    [HttpGet("of/{quizId}")]
-    public async Task<IEnumerable<ResultResponse>> GetQuizResults([FromQuery] int quizId)
+    [HttpGet("{quizId}/tree")]
+    public async Task<OutputNodeModel> ResultTree([FromRoute] int quizId)
     {
-        return mapper.Map<IEnumerable<ResultResponse>>(await resultService.GetQuizResults(quizId));
+        return await resultService.RegrowResultTreeForQuiz(quizId);
     }
 
-    [HttpPost("addTo/{quizId}")]
-    public async Task<ResultResponse> AddResultToQuiz([FromQuery] int quizId, [FromBody] AddResultRequest addResultRequest)
+    [HttpGet("itemListOf/{leafId}")]
+    public async Task<IEnumerable<ItemModel>> GetLeafItems(int leafId)
     {
-        return mapper.Map<ResultResponse>(
-            await resultService.AddResultToQuiz(quizId,
-            mapper.Map<AddResultModel>(addResultRequest)));
+        return await resultService.GetLeafItems(leafId);
     }
 
-    [HttpPut("{id}/addItem/{itemId}")]
-    public async Task<ResultResponse> AddItemToResult([FromQuery] int id, [FromQuery] int itemId)
+    [HttpPost("addItemTo/{leafId}")]
+    public async Task<OutputNodeModel> AddItemToLeaf([FromQuery] int itemId, [FromRoute] int leafId)
     {
-        return mapper.Map<ResultResponse>(
-            await resultService.AddItemToResult(id, itemId));
+        return await resultService.AddItemToLeaf(itemId, leafId);
     }
 
-    [HttpPut("{id}/removeItem/{itemId}")]
-    public async Task<ResultResponse> RemoveItemFromResult([FromQuery] int id, [FromQuery] int itemId)
+    [HttpDelete("removeItemFrom/{leafId}")]
+    public async Task<OutputNodeModel> RemoveItemFromLeaf([FromQuery] int itemId, [FromRoute] int leafId)
     {
-        return mapper.Map<ResultResponse>(
-            await resultService.AddItemToResult(id, itemId));
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateResult([FromQuery] int id, [FromBody] UpdateResultRequest updateResultRequest)
-    {
-        await resultService.UpdateResult(id, mapper.Map<UpdateResultModel>(updateResultRequest));
-        return Ok();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> RemoveResult([FromQuery] int id)
-    {
-        await resultService.RemoveResult(id);
-        return Ok();
+        return await resultService.RemoveItemFromLeaf(itemId, leafId);
     }
 }

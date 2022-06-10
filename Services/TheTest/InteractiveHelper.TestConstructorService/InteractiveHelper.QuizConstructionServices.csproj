@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\..\Data\Db.Context\InteractiveHelper.Db.Context.csproj" />
     <ProjectReference Include="..\..\..\Data\Db.Entities\InteractiveHelper.Db.Entities.csproj" />
     <ProjectReference Include="..\..\..\Shared\Common\InteractiveHelper.Common.csproj" />
+    <ProjectReference Include="..\..\InteractiveHelper.BrandService\InteractiveHelper.CatalogServices.csproj" />
   </ItemGroup>
 
 </Project>

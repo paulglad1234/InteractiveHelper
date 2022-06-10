@@ -1,111 +1,84 @@
 ﻿using AutoMapper;
+using InteractiveHelper.CatalogServices.Items.Models;
 using InteractiveHelper.Common.Exceptions;
-using InteractiveHelper.QuizConstructionServices.Models;
-using InteractiveHelper.QuizConstructionServices.Results;
 using InteractiveHelper.Db.Context;
+using InteractiveHelper.Db.Entities.Catalog;
 using InteractiveHelper.Db.Entities.Quiz;
+using InteractiveHelper.QuizConstructionServices.Results.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace InteractiveHelper.QuizConstructionServices;
-
-// TODO: use builder pattern
 
 public class ResultConstructionService : IResultConstructionService
 {
     private readonly IDbContextFactory<MainDbContext> dbContextFactory;
     private readonly IMapper mapper;
-    private readonly IResultGenerator resultGenerator;
 
-    public ResultConstructionService(IDbContextFactory<MainDbContext> dbContextFactory, IMapper mapper,
-        IResultGenerator resultGenerator)
+    public ResultConstructionService(IDbContextFactory<MainDbContext> dbContextFactory, IMapper mapper)
     {
         this.dbContextFactory = dbContextFactory;
         this.mapper = mapper;
-        this.resultGenerator = resultGenerator;
     }
 
-    public async Task<ResultModel> AddItemToResult(int itemId, int resultId)
+    public async Task<OutputNodeModel> AddItemToLeaf(int itemId, int leafId)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
-        var result = await context.Results.FindAsync(resultId);
-        CommonException.ThrowIfNull(result, $"Result with id {resultId} not found", 404);
+        var leaf = await context.Nodes.FindAsync(leafId);
+        CommonException.ThrowIfNull(leaf, "Leaf not found", 404);
+
         var item = await context.Items.FindAsync(itemId);
-        CommonException.ThrowIfNull(item, $"Item with id {itemId} not found", 404);
-        result.Items.Add(item);
-        //item.Results.Add(result);
+        CommonException.ThrowIfNull(item, "Item not found", 404);
+
+        if (leaf.Items is null)
+            leaf.Items = new List<Item>();
+
+        leaf.Items.Add(item);
         await context.SaveChangesAsync();
 
-        return mapper.Map<ResultModel>(result);
+        return mapper.Map<OutputNodeModel>(leaf);
     }
 
-    public async Task<QuizModel> GenerateQuizResults(int quizId)
+    public async Task<IEnumerable<ItemModel>> GetLeafItems(int leafId)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
-        var quiz = await context.Quizes.FindAsync(quizId);
-        CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
+        var leaf = await context.Nodes.FindAsync(leafId);
+        CommonException.ThrowIfNull(leaf, "Leaf not found", 404);
 
-        await resultGenerator.UpdateQuizWithGeneratedResults(quiz);
-        context.Quizes.Update(quiz);
-
-        await context.SaveChangesAsync();
-        return mapper.Map<QuizModel>(quiz);
+        return mapper.Map<IEnumerable<ItemModel>>(leaf.Items.ToList());
     }
 
-    public async Task<IEnumerable<ResultModel>> GetQuizResults(int quizId)
+    public async Task<OutputNodeModel> RegrowResultTreeForQuiz(int quizId)
     {
-        using var context = await dbContextFactory.CreateDbContextAsync();
-        var quiz = await context.Quizes.FindAsync(quizId);
-        CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
+        //using var context = await dbContextFactory.CreateDbContextAsync();
+        //var quiz = await context.Quizes.FindAsync(quizId);
+        //CommonException.ThrowIfNull(quiz, "Quiz not found", 404);
 
-        return mapper.Map<IEnumerable<ResultModel>>(quiz.Results.ToList());
+        //var root = new ResultNode();
+        //quiz.Root = root;
+        //await context.Nodes.AddAsync(root);
+        //context.Quizes.Update(quiz);
+
+        throw new NotImplementedException();
     }
 
-    public async Task<ResultModel> RemoveItemFromResult(int itemId, int resultId)
+    private static void AddAnswersToTree()
     {
-        using var context = await dbContextFactory.CreateDbContextAsync();
-        var result = await context.Results.FindAsync(resultId);
-        CommonException.ThrowIfNull(result, $"Result with id {resultId} not found", 404);
-        var item = result.Items.AsQueryable().FirstOrDefault(item => item.Id.Equals(itemId));
-        CommonException.ThrowIfNull(item, $"Item with id {itemId} not found in result {resultId}", 404);
-        result.Items.Remove(item);
-        //item.Results.Remove(result);
-        await context.SaveChangesAsync();
 
-        return mapper.Map<ResultModel>(result);
     }
 
-    public async Task RemoveResult(int resultId)
+    public async Task<OutputNodeModel> RemoveItemFromLeaf(int itemId, int leafId)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
-        var result = await context.Results.FindAsync(resultId);
-        CommonException.ThrowIfNull(result, $"Result with id {resultId} not found", 404);
+        var leaf = await context.Nodes.FindAsync(leafId);
+        CommonException.ThrowIfNull(leaf, "Leaf not found", 404);
 
-        context.Results.Remove(result);
-        await context.SaveChangesAsync();
-    }
+        var item = leaf.Items.FirstOrDefault(i => i.Id.Equals(itemId));
+        if (item is not null)
+        {
+            leaf.Items.Remove(item);
+            context.SaveChanges();
+        }
 
-    public async Task UpdateResult(int resultId, UpdateResultModel model)
-    {
-        using var context = await dbContextFactory.CreateDbContextAsync();
-        var result = await context.Results.FindAsync(resultId);
-        CommonException.ThrowIfNull(result, $"Result with id {resultId} not found", 404);
-
-        result = mapper.Map(model, result);
-        context.Results.Update(result);
-
-        await context.SaveChangesAsync();
-    }
-
-    public async Task<ResultModel> AddResultToQuiz(int quizId, AddResultModel model)
-    {
-        using var context = await dbContextFactory.CreateDbContextAsync();
-        var quiz = await context.Quizes.FindAsync(quizId);
-        CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
-        var result = mapper.Map<Result>(model);
-        result.Quiz = quiz;
-        await context.Results.AddAsync(result);
-        await context.SaveChangesAsync();
-
-        return mapper.Map<ResultModel>(result);
+        return mapper.Map<OutputNodeModel>(leaf);
     }
 }

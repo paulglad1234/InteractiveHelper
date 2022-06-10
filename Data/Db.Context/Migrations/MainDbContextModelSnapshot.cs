@@ -22,21 +22,6 @@ namespace InteractiveHelper.Db.Context.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AnswerResult", b =>
-                {
-                    b.Property<int>("AnswersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ResultsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AnswersId", "ResultsId");
-
-                    b.HasIndex("ResultsId");
-
-                    b.ToTable("result_answers", (string)null);
-                });
-
             modelBuilder.Entity("InteractiveHelper.Db.Entities.Catalog.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -199,9 +184,6 @@ namespace InteractiveHelper.Db.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
-
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
@@ -231,20 +213,22 @@ namespace InteractiveHelper.Db.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("QuizId")
+                    b.Property<int?>("NextId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<Guid>("Uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuizId");
+                    b.HasIndex("NextId")
+                        .IsUnique()
+                        .HasFilter("[NextId] IS NOT NULL");
 
                     b.HasIndex("Uid")
                         .IsUnique();
@@ -260,21 +244,47 @@ namespace InteractiveHelper.Db.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<int?>("HeadId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HelloMessage")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("RootId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<Guid>("Uid")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("HeadId")
+                        .IsUnique()
+                        .HasFilter("[HeadId] IS NOT NULL");
+
+                    b.HasIndex("RootId")
+                        .IsUnique()
+                        .HasFilter("[RootId] IS NOT NULL");
 
                     b.HasIndex("Uid")
                         .IsUnique();
 
-                    b.ToTable("the_tests", (string)null);
+                    b.ToTable("quizes", (string)null);
                 });
 
-            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Result", b =>
+            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.ResultNode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -282,12 +292,13 @@ namespace InteractiveHelper.Db.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Conclusion")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("QuizId")
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("Uid")
@@ -295,12 +306,16 @@ namespace InteractiveHelper.Db.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuizId");
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("QuestionId");
 
                     b.HasIndex("Uid")
                         .IsUnique();
 
-                    b.ToTable("results", (string)null);
+                    b.ToTable("result_nodes", (string)null);
                 });
 
             modelBuilder.Entity("InteractiveHelper.Db.Entities.User.User", b =>
@@ -369,7 +384,7 @@ namespace InteractiveHelper.Db.Context.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("ItemResult", b =>
+            modelBuilder.Entity("ItemResultNode", b =>
                 {
                     b.Property<int>("ItemsId")
                         .HasColumnType("int");
@@ -381,7 +396,7 @@ namespace InteractiveHelper.Db.Context.Migrations
 
                     b.HasIndex("ResultsId");
 
-                    b.ToTable("itemset_results", (string)null);
+                    b.ToTable("item_results", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -515,21 +530,6 @@ namespace InteractiveHelper.Db.Context.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("AnswerResult", b =>
-                {
-                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Answer", null)
-                        .WithMany()
-                        .HasForeignKey("AnswersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Result", null)
-                        .WithMany()
-                        .HasForeignKey("ResultsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("InteractiveHelper.Db.Entities.Catalog.Characteristic", b =>
                 {
                     b.HasOne("InteractiveHelper.Db.Entities.Catalog.Category", "Category")
@@ -592,27 +592,54 @@ namespace InteractiveHelper.Db.Context.Migrations
 
             modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Question", b =>
                 {
-                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Quiz", "Quiz")
-                        .WithMany("Questions")
-                        .HasForeignKey("QuizId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Question", "Next")
+                        .WithOne("Previous")
+                        .HasForeignKey("InteractiveHelper.Db.Entities.Quiz.Question", "NextId");
 
-                    b.Navigation("Quiz");
+                    b.Navigation("Next");
                 });
 
-            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Result", b =>
+            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Quiz", b =>
                 {
-                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Quiz", "Quiz")
-                        .WithMany("Results")
-                        .HasForeignKey("QuizId")
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Question", "Head")
+                        .WithOne("Quiz")
+                        .HasForeignKey("InteractiveHelper.Db.Entities.Quiz.Quiz", "HeadId");
+
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.ResultNode", "Root")
+                        .WithOne("Quiz")
+                        .HasForeignKey("InteractiveHelper.Db.Entities.Quiz.Quiz", "RootId");
+
+                    b.Navigation("Head");
+
+                    b.Navigation("Root");
+                });
+
+            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.ResultNode", b =>
+                {
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Answer", "Answer")
+                        .WithMany("Nodes")
+                        .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Quiz");
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.ResultNode", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Question", "Question")
+                        .WithMany("Nodes")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("ItemResult", b =>
+            modelBuilder.Entity("ItemResultNode", b =>
                 {
                     b.HasOne("InteractiveHelper.Db.Entities.Catalog.Item", null)
                         .WithMany()
@@ -620,7 +647,7 @@ namespace InteractiveHelper.Db.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.Result", null)
+                    b.HasOne("InteractiveHelper.Db.Entities.Quiz.ResultNode", null)
                         .WithMany()
                         .HasForeignKey("ResultsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -700,16 +727,30 @@ namespace InteractiveHelper.Db.Context.Migrations
                     b.Navigation("ItemCharacteristics");
                 });
 
+            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Answer", b =>
+                {
+                    b.Navigation("Nodes");
+                });
+
             modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Question", b =>
                 {
                     b.Navigation("Answers");
+
+                    b.Navigation("Nodes");
+
+                    b.Navigation("Previous")
+                        .IsRequired();
+
+                    b.Navigation("Quiz")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.Quiz", b =>
+            modelBuilder.Entity("InteractiveHelper.Db.Entities.Quiz.ResultNode", b =>
                 {
-                    b.Navigation("Questions");
+                    b.Navigation("Children");
 
-                    b.Navigation("Results");
+                    b.Navigation("Quiz")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Api.Controllers.QuizConstruction.Quizes.Models;
 using InteractiveHelper.Common.Security;
-using InteractiveHelper.QuizConstructionServices;
+using InteractiveHelper.QuizConstructionServices.Quizes;
+using InteractiveHelper.QuizConstructionServices.Quizes.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,16 +30,9 @@ public class QuizConstructionController : Controller
     }
 
     [HttpPost("")]
-    public async Task<QuizResponse> CreateNewQuiz()
+    public async Task<QuizResponse> CreateNewQuiz([FromBody] QuizRequest request)
     {
-        return mapper.Map<QuizResponse>(await quizService.CreateNewQuiz());
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> SetActiveQuiz([FromQuery] int id)
-    {
-        await quizService.SetActiveQuiz(id);
-        return Ok();
+        return mapper.Map<QuizResponse>(await quizService.CreateNewQuiz(mapper.Map<InputQuizModel>(request)));
     }
 
     [HttpDelete("{id}")]

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Api.Controllers.Catalog.Items.Models;
+using InteractiveHelper.CatalogServices.Items;
+using InteractiveHelper.CatalogServices.Items.Models;
 using InteractiveHelper.Common.Security;
-using InteractiveHelper.ItemService;
-using InteractiveHelper.ItemService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

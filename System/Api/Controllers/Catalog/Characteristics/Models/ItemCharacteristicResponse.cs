@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InteractiveHelper.CharactetisricService.Models;
+using InteractiveHelper.CatalogServices.Characteristics.Models;
 
 namespace InteractiveHelper.Api.Controllers.Catalog.Characteristics.Models;
 

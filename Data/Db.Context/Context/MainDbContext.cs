@@ -18,7 +18,7 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     public DbSet<Quiz> Quizes { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
-    public DbSet<Result> Results { get; set; }
+    public DbSet<ResultNode> Nodes { get; set; }
 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
 
@@ -90,35 +90,43 @@ public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 
         #endregion
 
-        #region TheTest
+        #region Quiz
 
-        builder.Entity<Quiz>().ToTable("the_tests");
-        //builder.Entity<TheTest>().HasIndex(x => x.IsActive).HasFilter("[IsActive] = true").IsUnique();
+        builder.Entity<Quiz>().ToTable("quizes");
+        builder.Entity<Quiz>().Property(x => x.Url).IsRequired().HasMaxLength(16);
+        builder.Entity<Quiz>().HasAlternateKey(x => x.Url);
+        builder.Entity<Quiz>().Property(x => x.Title).IsRequired().HasMaxLength(16);
+        builder.Entity<Quiz>().Property(x => x.HelloMessage).IsRequired().HasMaxLength(200);
 
         builder.Entity<Question>().ToTable("questions");
-        builder.Entity<Question>().Property(x => x.Text).IsRequired();
-        builder.Entity<Question>().Property(x => x.Text).HasMaxLength(500);
-        builder.Entity<Question>().HasOne(x => x.Quiz).WithMany(x => x.Questions)
-            .HasForeignKey(x => x.QuizId).OnDelete(DeleteBehavior.Restrict);
+        builder.Entity<Question>().Property(x => x.Text).IsRequired().HasMaxLength(300);
 
         builder.Entity<Answer>().ToTable("answers");
-        builder.Entity<Answer>().Property(x => x.Text).HasMaxLength(200);
-        builder.Entity<Answer>().Property(x => x.Text).IsRequired();
+        builder.Entity<Answer>().Property(x => x.Text).IsRequired().HasMaxLength(200);
+
+        builder.Entity<ResultNode>().ToTable("result_nodes");
+
+        builder.Entity<Quiz>().HasOne(x => x.Head).WithOne(x => x.Quiz)
+            .HasForeignKey<Quiz>(x => x.HeadId).IsRequired(false);
+        builder.Entity<Quiz>().HasOne(x => x.Root).WithOne(x => x.Quiz)
+            .HasForeignKey<Quiz>(x => x.RootId).IsRequired(false);
+
+        builder.Entity<Question>().HasOne(x => x.Next).WithOne(x => x.Previous)
+            .HasForeignKey<Question>(x => x.NextId).IsRequired(false);
+
         builder.Entity<Answer>().HasOne(x => x.Question).WithMany(x => x.Answers)
-            .HasForeignKey(x => x.QuestionId).OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(x => x.QuestionId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Entity<Result>().ToTable("results");
-        builder.Entity<Result>().Property(x => x.Conclusion).IsRequired();
-        builder.Entity<Result>().Property(x => x.Conclusion).HasMaxLength(1000);
-        builder.Entity<Result>().HasOne(x => x.Quiz).WithMany(x => x.Results)
-            .HasForeignKey(x => x.QuizId).OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<ResultNode>().HasOne(x => x.Question).WithMany(x => x.Nodes)
+            .HasForeignKey(x => x.QuestionId);
+        builder.Entity<ResultNode>().HasOne(x => x.Answer).WithMany(x => x.Nodes)
+            .HasForeignKey(x => x.AnswerId);
 
-        // it even made the indexes right, according to THETEST migration.
-        // Because searching is supposed to be done excactly by x.Results
-        builder.Entity<Result>().HasMany(x => x.Answers).WithMany(x => x.Results)
-            .UsingEntity(e => e.ToTable("result_answers"));
-        builder.Entity<Result>().HasMany(x => x.Items).WithMany(x => x.Results)
-            .UsingEntity(e => e.ToTable("itemset_results"));
+        builder.Entity<ResultNode>().HasOne(x => x.Parent).WithMany(x => x.Children)
+            .HasForeignKey(x => x.ParentId).IsRequired(false);
+        builder.Entity<ResultNode>().HasMany(x => x.Items).WithMany(x => x.Results)
+            .UsingEntity(e => e.ToTable("item_results"));
 
         #endregion
     }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.QuizConstructionServices.Models;
+using InteractiveHelper.QuizConstructionServices.Questions.Models;
 
 namespace InteractiveHelper.Api.Controllers.QuizConstruction.Questions.Models;
 
@@ -23,6 +23,6 @@ public class UpdateQuestionRequestProfile : Profile
 {
     public UpdateQuestionRequestProfile()
     {
-        CreateMap<UpdateQuestionRequest, UpdateQuestionModel>();
+        CreateMap<UpdateQuestionRequest, InputQuestionModel>();
     }
 }

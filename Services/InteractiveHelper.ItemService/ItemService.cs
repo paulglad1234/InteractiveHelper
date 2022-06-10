@@ -26,7 +26,7 @@ internal class ItemService : IItemService
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
 
-        return await items.Select(item => mapper.Map<ItemModel>(item)).ToListAsync();
+        return mapper.Map<IEnumerable<ItemModel>>(await items.ToListAsync());
     }
 
     public async Task<ItemModel> GetItem(int itemId)

@@ -1,11 +1,11 @@
-﻿using InteractiveHelper.QuizConstructionServices.Models;
+﻿using InteractiveHelper.QuizConstructionServices.Answers.Models;
 
-namespace InteractiveHelper.QuizConstructionServices;
+namespace InteractiveHelper.QuizConstructionServices.Answers;
 
 public interface IAnswerConstructionService
 {
-    Task<IEnumerable<AnswerModel>> GetQuestionAnswers(int questionId);
-    Task<AnswerModel> AddNewAnswerToQuestion(int questionId, AddAnswerModel model);
-    Task UpdateAnswer(int answerId, UpdateAnswerModel model);
+    Task<IEnumerable<OutputAnswerModel>> GetQuestionAnswers(int questionId);
+    Task<OutputAnswerModel> AddNewAnswerToQuestion(int questionId, InputAnswerModel model);
+    Task UpdateAnswer(int answerId, InputAnswerModel model);
     Task RemoveAnswer(int answerId);
 }

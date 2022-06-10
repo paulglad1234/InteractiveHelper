@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InteractiveHelper.BrandService.Models;
+using InteractiveHelper.CatalogServices.Items.Models;
 
 namespace InteractiveHelper.Api.Controllers.Catalog.Brands.Models;
 

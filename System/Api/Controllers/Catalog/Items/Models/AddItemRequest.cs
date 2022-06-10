@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using InteractiveHelper.ItemService.Models;
+using InteractiveHelper.CatalogServices.Items.Models;
 using System.Text;
 
 namespace InteractiveHelper.Api.Controllers.Catalog.Items.Models;

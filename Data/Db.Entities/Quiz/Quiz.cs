@@ -2,9 +2,12 @@
 
 public class Quiz : BaseEntity
 {
-    public bool IsActive { get; set; } = false;
+    public string Url { get; set; }
+    public string Title { get; set; }
+    public string HelloMessage { get; set; }
 
-    public virtual ICollection<Question> Questions { get; set; }
-
-    public virtual ICollection<Result> Results { get; set; }
+    public int? HeadId { get; set; }
+    public virtual Question Head { get; set; }
+    public int? RootId { get; set; }
+    public virtual ResultNode Root { get; set; }
 }

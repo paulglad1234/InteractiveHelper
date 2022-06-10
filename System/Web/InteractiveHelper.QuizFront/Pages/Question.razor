@@ -1,0 +1,16 @@
+﻿@page "/question"
+
+@layout MainLayout
+
+<MudText Typo="Typo.h4" Class="ma-8">Насколько Вам важна мобильность?</MudText>
+
+<MudRadioGroup @bind-SelectedOption="@Answer">
+    <MudRadio Color="Color.Primary" Option="@(Answer.First)">Мне нужен ноутбук, чтобы я мог взять его с собой на работу/учёбу/в поездку.</MudRadio>
+    <MudRadio Color="Color.Primary" Option="@(Answer.Second)">Я планирую купить компьютер для дома/офиса. Меня интересуют только стационарные компьютеры.</MudRadio>
+    <MudRadio Color="Color.Primary" Option="@(Answer.Third)">Мобильность не имеет значения.</MudRadio>
+</MudRadioGroup>
+
+@code {
+
+    public Answer Answer { get; set; }
+}

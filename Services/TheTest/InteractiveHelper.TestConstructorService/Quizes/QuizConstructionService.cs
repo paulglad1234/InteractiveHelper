@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Common.Exceptions;
-using InteractiveHelper.QuizConstructionServices.Models;
 using InteractiveHelper.Db.Context;
 using InteractiveHelper.Db.Entities.Quiz;
 using Microsoft.EntityFrameworkCore;
+using InteractiveHelper.QuizConstructionServices.Quizes.Models;
+using InteractiveHelper.QuizConstructionServices.Questions.Models;
 
-namespace InteractiveHelper.QuizConstructionServices;
+namespace InteractiveHelper.QuizConstructionServices.Quizes;
 
 public class QuizConstructionService : IQuizConstructionService
 {
@@ -18,50 +19,40 @@ public class QuizConstructionService : IQuizConstructionService
         this.mapper = mapper;
     }
 
-    public async Task<QuizModel> CreateNewQuiz()
+    public async Task AddHeadQuestionToQuiz(int quizId, InputQuestionModel model)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
-        var quiz = await context.Quizes.AddAsync(new Quiz());
-        await context.SaveChangesAsync();
+        var quiz = await context.Quizes.FindAsync(quizId);
+        CommonException.ThrowIfNull(quiz, "Quiz not found", 404);
 
-        return mapper.Map<QuizModel>(quiz.Entity);
+        var question = mapper.Map<Question>(model);
+        quiz.Head = question;
+        await context.Questions.AddAsync(question);
+        context.Quizes.Update(quiz);
+
+        await context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<QuizModel>> GetAllQuizes()
+    public async Task<OutputQuizModel> CreateNewQuiz(InputQuizModel model)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
+        return mapper.Map<OutputQuizModel>(await context.Quizes.AddAsync(
+            mapper.Map<Quiz>(model)));
+    }
 
-        return mapper.Map<IEnumerable<QuizModel>>(await context.Quizes.ToListAsync());
+    public async Task<IEnumerable<OutputQuizModel>> GetAllQuizes()
+    {
+        using var context = await dbContextFactory.CreateDbContextAsync();
+        return mapper.Map<IEnumerable<OutputQuizModel>>(await context.Quizes.ToListAsync());
     }
 
     public async Task RemoveQuiz(int quizId)
     {
         using var context = await dbContextFactory.CreateDbContextAsync();
         var quiz = await context.Quizes.FindAsync(quizId);
-        CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
+        CommonException.ThrowIfNull(quiz, "Quiz not found", 404);
 
         context.Quizes.Remove(quiz);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task SetActiveQuiz(int quizId)
-    {
-        using var context = await dbContextFactory.CreateDbContextAsync();
-        var quiz = await context.Quizes.FindAsync(quizId);
-        CommonException.ThrowIfNull(quiz, $"Quiz with id {quizId} not found", 404);
-        quiz.IsActive = true;
-
-        var activeQuiz = await context.Quizes.FirstOrDefaultAsync(quiz => quiz.IsActive);
-        if (activeQuiz is not null)
-        {
-            activeQuiz.IsActive = false;
-            context.Quizes.UpdateRange(quiz, activeQuiz);
-        }
-        else
-        {
-            context.Quizes.Update(quiz);
-        }
-
         await context.SaveChangesAsync();
     }
 }

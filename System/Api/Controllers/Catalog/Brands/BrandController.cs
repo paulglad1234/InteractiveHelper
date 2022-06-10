@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InteractiveHelper.Api.Controllers.Catalog.Brands.Models;
-using InteractiveHelper.BrandService;
-using InteractiveHelper.BrandService.Models;
+using InteractiveHelper.CatalogServices.Brands;
+using InteractiveHelper.CatalogServices.Brands.Models;
 using InteractiveHelper.Common.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +49,7 @@ public class BrandController : Controller
     /// <returns>Collection of items</returns>
     [HttpGet("{id}/items")]
     [AllowAnonymous]
-    public async Task<IEnumerable<BrandsItemResponse>> GetBrandsItems([FromRoute] int id, 
+    public async Task<IEnumerable<BrandsItemResponse>> GetBrandsItems([FromRoute] int id,
         [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var items = await brandService.GetBrandsItems(id, offset, limit);

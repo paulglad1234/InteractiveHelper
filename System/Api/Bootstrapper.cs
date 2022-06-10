@@ -1,8 +1,5 @@
-﻿using InteractiveHelper.BrandService;
-using InteractiveHelper.CategoryService;
-using InteractiveHelper.CharactetisricService;
+﻿using InteractiveHelper.CatalogServices;
 using InteractiveHelper.QuizConstructionServices;
-using InteractiveHelper.ItemService;
 using InteractiveHelper.Settings;
 
 namespace InteractiveHelper.Api;
@@ -21,10 +18,7 @@ public static class Bootstrapper
     {
         services
             .AddSettings()
-            .AddItemService()
-            .AddBrandService()
-            .AddCategoryService()
-            .AddCharacteristicService()
+            .AddCatalogServices()
             .AddQuizConstructorServices();
 
         return services;
